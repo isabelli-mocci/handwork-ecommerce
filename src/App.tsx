@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
 interface AppProps {
   children: ReactNode;
@@ -9,10 +9,10 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        {children} {/* renderizar a página das rotas aqui */}
+        {children}
       </main>
       <Footer />
     </div>
