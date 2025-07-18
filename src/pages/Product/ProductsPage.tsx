@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from '../components/ProductCard';
+// import ProductCard from '../components/ProductCard';
 
 // Dados de produtos de exemplo
 const sampleProducts = [
@@ -127,7 +127,7 @@ const ProductsPage: React.FC = () => {
         <h1 className='text-3xl font-bold text-gray-800 mb-6'>
           Nossos Produtos Artesanais
         </h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+        {/* <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
           {sampleProducts.map(product => (
             <ProductCard
               key={product.id} // Chave única para cada item na lista (obrigatório no React)
@@ -137,7 +137,7 @@ const ProductsPage: React.FC = () => {
               imageUrl={product.imageUrl}
             />
           ))}
-        </div>
+        </div> */}
       </section>
     </div>
   );
