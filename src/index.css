@@ -4,6 +4,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --- Custom Fonts --- */
+
+@font-face {
+  font-family: 'American Typewriter Condensed';
+  src: url('./assets/fonts/itc-american-typewriter-std-condensed.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Typewriter Condensed';
+  src: url('./assets/fonts/itc-american-typewriter-std-condensed.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Typewriter Condensed';
+  src: url('./assets/fonts/itc-american-typewriter-std-condensed.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* --- Custom Styles --- */
 
 html, body, #root {
@@ -13,6 +39,8 @@ html, body, #root {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
 }
 
 body {
