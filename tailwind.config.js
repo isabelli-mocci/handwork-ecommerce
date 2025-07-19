@@ -13,6 +13,14 @@ export default {
         text: '#786864',
         heading: '#f97e50',
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        cardo: ['Cardo', 'serif'],
+        americanTypewriterCondensed: [
+          'American Typewriter Condensed',
+          'monospace',
+        ],
+      },
     },
   },
   plugins: [],
