@@ -58,12 +58,14 @@ const PopularToyCard: React.FC<{ toy: Toy }> = ({ toy }) => (
     </div>
     <div className='p-2 text-left flex-1 flex flex-col justify-between bg-background'>
       <div>
-        <h3 className='text-lg font-normal group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4 transition-all duration-200'>{toy.name}</h3>
-        <p className='text-xl font-extralight mb-4'>{toy.price}</p>
+        <h3 className='text-sm lg:text-lg font-normal group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4 transition-all duration-200'>
+          {toy.name}
+        </h3>
+        <p className='text-base lg:text-xl font-extralight mb-4'>{toy.price}</p>
       </div>
       <Link
         to={toy.link}
-        className='inline-block w-full py-3 px-6 font-cardo font-bold uppercase border-2 border-text/50 text-center mt-auto'
+        className='inline-block w-full py-1 md:py-3 md:px-6 font-cardo font-bold text-xs lg:text-base uppercase border-2 border-text/50 text-center mt-auto'
       >
         Choose Options
       </Link>
