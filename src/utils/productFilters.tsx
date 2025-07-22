@@ -37,16 +37,49 @@ export function filterProducts(
 ): Product[] {
   const defaultPriceRange = priceRanges[0];
   const selectedRange =
-    priceRanges.find(range => range.label === selectedPriceRangeLabel) || defaultPriceRange;
+    priceRanges.find(range => range.label === selectedPriceRangeLabel) ||
+    defaultPriceRange;
 
   return products.filter(product => {
     const matchesSearch =
-      !searchTerm || product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      !searchTerm ||
+      product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'All' || product.category === selectedCategory;
     const matchesPrice =
-      product.priceValue >= selectedRange.min && product.priceValue <= selectedRange.max;
-    const matchesColor = selectedColor === 'All' || product.color === selectedColor;
+      product.priceValue >= selectedRange.min &&
+      product.priceValue <= selectedRange.max;
+    const matchesColor =
+      selectedColor === 'All' || product.color === selectedColor;
 
     return matchesSearch && matchesCategory && matchesPrice && matchesColor;
   });
+}
+
+export type SortOption = { label: string; value: string };
+
+export const sortOptions: SortOption[] = [
+  { label: 'Best Selling', value: 'best-selling' },
+  { label: 'Price: Low to High', value: 'price-asc' },
+  { label: 'Price: High to Low', value: 'price-desc' },
+  { label: 'Name: A-Z', value: 'name-asc' },
+  { label: 'Name: Z-A', value: 'name-desc' },
+];
+
+export function sortProducts(products: Product[], sortBy: string): Product[] {
+  const sortedProducts = [...products];
+
+  switch (sortBy) {
+    case 'price-asc':
+      return sortedProducts.sort((a, b) => a.priceValue - b.priceValue);
+    case 'price-desc':
+      return sortedProducts.sort((a, b) => b.priceValue - a.priceValue);
+    case 'name-asc':
+      return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+    case 'name-desc':
+      return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+    case 'best-selling':
+    default:
+      return sortedProducts;
+  }
 }
