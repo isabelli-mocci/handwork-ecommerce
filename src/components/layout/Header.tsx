@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import {
   HiOutlineBars3CenterLeft,
@@ -10,12 +11,35 @@ import {
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'Our Story' },
-  { to: '/best-sellers', label: 'Best Sellers' },
+  { to: '/best-sellers', label: 'Best Sellers', scrollTo: 'popular-toys-section' },
   { to: '/products', label: 'Products' },
 ];
 
 function DesktopNav() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    link: { to: string; label: string; scrollTo?: string }
+  ) => {
+    if (link.scrollTo) {
+      e.preventDefault();
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const section = document.getElementById(link.scrollTo ?? '');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        const section = document.getElementById(link.scrollTo ?? '');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
   return (
     <nav className="hidden lg:block text-left">
       <ul className="flex gap-4 lg:gap-8 justify-start">
@@ -27,6 +51,7 @@ function DesktopNav() {
             <li key={link.to}>
               <Link
                 to={link.to}
+                onClick={link.scrollTo ? (e) => handleNavClick(e, link) : undefined}
                 className={
                   `relative transition-colors duration-300 hover:text-primary group focus:outline-none focus-visible:text-primary${
                     isActive ? ' text-primary' : ''
@@ -56,16 +81,44 @@ function DesktopNav() {
 }
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    link: { to: string; label: string; scrollTo?: string }
+  ) => {
+    if (link.scrollTo) {
+      e.preventDefault();
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const section = document.getElementById(link.scrollTo ?? '');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+        if (onClose) onClose();
+      } else {
+        const section = document.getElementById(link.scrollTo ?? '');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+        if (onClose) onClose();
+      }
+    } else {
+      if (onClose) onClose();
+    }
+  };
   if (!open) return null;
   return (
-    <div className='lg:hidden absolute top-full left-0 w-full bg-white shadow-lg p-4 z-40'>
+    <div className='lg:hidden absolute top-full left-0 w-full p-4 z-40'>
       <ul className='flex flex-col gap-4'>
         {NAV_LINKS.map(link => (
           <li key={link.to}>
             <Link
               to={link.to}
               className='block text-text-color hover:text-primary py-2'
-              onClick={onClose}
+              onClick={link.scrollTo ? (e) => handleNavClick(e, link) : () => onClose && onClose()}
             >
               {link.label}
             </Link>
@@ -109,7 +162,7 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className='shadow-md p-4 sticky top-0 z-50 bg-white'>
+    <header className='shadow-sm p-4 sticky top-0 z-50'>
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center'>
           <div className='flex items-center lg:hidden'>
