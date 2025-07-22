@@ -1,82 +1,7 @@
 import React from 'react';
+import Dropdown from './Dropdown';
 import { getColorClass } from '../../utils/productFilters';
-import type { PriceRange } from '../../utils/productFilters';
-
-interface FilterButtonProps {
-  label: string;
-  isSelected: boolean;
-  onClick: () => void;
-  className?: string;
-}
-
-const FilterButton: React.FC<FilterButtonProps> = ({
-  label,
-  isSelected,
-  onClick,
-  className,
-}) => {
-  const baseClass =
-    'px-1 py-0.5 text-sm font-medium border-none focus:outline-none transition-colors';
-  const selectedClass = 'text-primary underline';
-  const defaultClass = 'text-text hover:text-primary';
-
-  return (
-    <button
-      key={label}
-      onClick={onClick}
-      className={`${baseClass} ${isSelected ? selectedClass : defaultClass} ${
-        className || ''
-      }`}
-      style={{ minWidth: 0 }}
-    >
-      {label}
-    </button>
-  );
-};
-
-interface ColorFilterButtonProps {
-  color: string;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-const ColorFilterButton: React.FC<ColorFilterButtonProps> = ({
-  color,
-  isSelected,
-  onClick,
-}) => {
-  const baseClass =
-    'h-5 w-5 flex items-center justify-center border border-gray-300 transition-transform duration-200 rounded-sm';
-  const selectedClass = 'ring-1 ring-primary scale-110';
-  const defaultClass = 'ring-0 hover:scale-105';
-  const allColorClass = 'text-xs text-text border border-text/20 bg-white';
-
-  return (
-    <button
-      key={color}
-      onClick={onClick}
-      className={`${baseClass} ${getColorClass(color)} ${
-        isSelected ? selectedClass : defaultClass
-      } ${color === 'All' ? allColorClass : ''}`}
-      aria-label={`Filter by ${color}`}
-      style={{ minWidth: 0, fontSize: color === 'All' ? '0.7rem' : undefined }}
-    >
-      {color === 'All' && 'All'}
-    </button>
-  );
-};
-
-interface FilterSectionProps {
-  title: string;
-  children: React.ReactNode;
-}
-
-const FilterSection: React.FC<FilterSectionProps> = ({ title, children }) => (
-  <div className='flex flex-row gap-2 items-center'>
-    <h3 className='text-sm font-normal text-text mr-1'>{title}:</h3>
-    <div className='flex flex-row flex-wrap gap-1 items-center'>{children}</div>
-  </div>
-);
+import type { PriceRange, SortOption } from '../../utils/productFilters';
 
 interface FilterControlsProps {
   searchTerm: string;
@@ -90,9 +15,28 @@ interface FilterControlsProps {
   colors: string[];
   selectedColor: string;
   setSelectedColor: (value: string) => void;
+  sortBy: string;
+  setSortBy: (value: string) => void;
+  sortOptions: SortOption[];
   isMobile?: boolean;
   onClose?: () => void;
+  productCount: number;
 }
+
+const getColorDropdownOptions = (colors: string[]) => {
+  return colors.map(color => ({
+    value: color,
+    label: color,
+    icon:
+      color !== 'All' ? (
+        <span
+          className={`w-3 h-3 rounded-full inline-block mr-1 ${getColorClass(
+            color
+          )}`}
+        ></span>
+      ) : null,
+  }));
+};
 
 const FilterControls: React.FC<FilterControlsProps> = ({
   searchTerm,
@@ -106,18 +50,29 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   colors,
   selectedColor,
   setSelectedColor,
+  sortBy,
+  setSortBy,
+  sortOptions,
   isMobile = false,
   onClose,
+  productCount,
 }) => {
   const inputClass =
-    'w-full md:w-32 border-0 border-b border-gray-300 bg-transparent text-sm focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-0.5 mb-1 md:mb-0';
+    'w-full md:w-56 border-0 border-b-2 border-gray-300 bg-transparent text-sm focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-1 transition-all duration-200';
+
+  const categoryOptions = categories.map(cat => ({ label: cat, value: cat }));
+  const priceRangeOptions = priceRanges.map(range => ({
+    label: range.label,
+    value: range.label,
+  }));
+  const colorDropdownOptions = getColorDropdownOptions(colors);
 
   if (isMobile) {
     return (
-      <div className='flex flex-col gap-2 relative'>
+      <div className='flex flex-col gap-5 p-5 relative h-full overflow-auto'>
         {onClose && (
           <button
-            className='absolute top-1 right-1 text-gray-400 hover:text-primary text-lg font-bold bg-transparent border-none outline-none'
+            className='absolute top-2 right-2 text-gray-400 hover:text-primary text-2xl font-bold bg-transparent border-none outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors duration-150'
             onClick={onClose}
             aria-label='Close filter'
             style={{ lineHeight: 1 }}
@@ -125,89 +80,144 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             &times;
           </button>
         )}
-        <input
-          type='text'
-          placeholder='Search...'
-          className={inputClass}
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-
-        <FilterSection title='Category'>
-          {categories.map(category => (
-            <FilterButton
-              key={category}
-              label={category}
-              isSelected={selectedCategory === category}
-              onClick={() => setSelectedCategory(category)}
+        <h2 className='text-xl font-bold text-primary mb-4 tracking-tight'>
+          Filter & Sort Options
+        </h2>
+        <div className='flex flex-col gap-5'>
+          {/* Search Input */}
+          <div className='flex flex-col'>
+            <label
+              htmlFor='search-mobile'
+              className='text-sm font-semibold text-text mb-1 tracking-tight'
+            >
+              Search:
+            </label>
+            <input
+              id='search-mobile'
+              type='text'
+              placeholder='Search products...'
+              className={inputClass + ' focus:border-b-2 focus:border-primary'}
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
             />
-          ))}
-        </FilterSection>
+          </div>
 
-        <FilterSection title='Price'>
-          {priceRanges.map(range => (
-            <FilterButton
-              key={range.label}
-              label={range.label}
-              isSelected={selectedPriceRange === range.label}
-              onClick={() => setSelectedPriceRange(range.label)}
+          {/* Category Filter */}
+          <div className='flex flex-col'>
+            <label
+              htmlFor='category-mobile'
+              className='text-sm font-semibold text-text mb-1 tracking-tight'
+            >
+              Category:
+            </label>
+            <Dropdown
+              label='Category'
+              options={categoryOptions}
+              selectedValue={selectedCategory}
+              onValueChange={setSelectedCategory}
+              className='w-full'
             />
-          ))}
-        </FilterSection>
+          </div>
 
-        <FilterSection title='Color'>
-          {colors.map(color => (
-            <ColorFilterButton
-              key={color}
-              color={color}
-              isSelected={selectedColor === color}
-              onClick={() => setSelectedColor(color)}
+          {/* Price Filter */}
+          <div className='flex flex-col'>
+            <label
+              htmlFor='price-mobile'
+              className='text-sm font-semibold text-text mb-1 tracking-tight'
+            >
+              Price:
+            </label>
+            <Dropdown
+              label='Price'
+              options={priceRangeOptions}
+              selectedValue={selectedPriceRange}
+              onValueChange={setSelectedPriceRange}
+              className='w-full'
             />
-          ))}
-        </FilterSection>
+          </div>
+
+          {/* Color Filter */}
+          <div className='flex flex-col'>
+            <label
+              htmlFor='color-mobile'
+              className='text-sm font-semibold text-text mb-1 tracking-tight'
+            >
+              Color:
+            </label>
+            <Dropdown
+              label='Color'
+              options={colorDropdownOptions}
+              selectedValue={selectedColor}
+              onValueChange={setSelectedColor}
+              className='w-full'
+            />
+          </div>
+
+          {/* Sort By */}
+          <div className='flex flex-col'>
+            <label
+              htmlFor='sort-mobile'
+              className='text-sm font-semibold text-text mb-1 tracking-tight'
+            >
+              Sort By:
+            </label>
+            <Dropdown
+              label='Sort By'
+              options={sortOptions}
+              selectedValue={sortBy}
+              onValueChange={setSortBy}
+              className='w-full'
+            />
+          </div>
+        </div>
       </div>
     );
   }
 
+  // Desktop Layout
   return (
-    <div className='flex flex-row items-center gap-4 mb-4'>
-      <input
-        type='text'
-        placeholder='Search...'
-        className={` ${inputClass}`}
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
-      <FilterSection title='Category'>
-        {categories.map(category => (
-          <FilterButton
-            key={category}
-            label={category}
-            isSelected={selectedCategory === category}
-            onClick={() => setSelectedCategory(category)}
-          />
-        ))}
-      </FilterSection>
-      <FilterSection title='Price'>
-        {priceRanges.map(range => (
-          <FilterButton
-            key={range.label}
-            label={range.label}
-            isSelected={selectedPriceRange === range.label}
-            onClick={() => setSelectedPriceRange(range.label)}
-          />
-        ))}
-      </FilterSection>
-      <FilterSection title='Color'>
-        {colors.map(color => (
-          <ColorFilterButton
-            key={color}
-            color={color}
-            isSelected={selectedColor === color}
-            onClick={() => setSelectedColor(color)}
-          />
-        ))}
-      </FilterSection>
+    <div className='flex flex-col md:flex-row items-center mb-6 gap-6 w-full'>
+      <div className='flex flex-wrap items-center gap-5 flex-grow'>
+        <span className='text-sm font-normal text-text tracking-tight'>Search:</span>
+        <input
+          type='text'
+          placeholder='Type here...'
+          className={inputClass + ' focus:border-b-2 focus:border-primary'}
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+        <span className='text-sm font-normal text-text tracking-tight'>Filter:</span>
+        <Dropdown
+          label='Category'
+          options={categoryOptions}
+          selectedValue={selectedCategory}
+          onValueChange={setSelectedCategory}
+        />
+        <Dropdown
+          label='Price'
+          options={priceRangeOptions}
+          selectedValue={selectedPriceRange}
+          onValueChange={setSelectedPriceRange}
+        />
+        <Dropdown
+          label='Color'
+          options={colorDropdownOptions}
+          selectedValue={selectedColor}
+          onValueChange={setSelectedColor}
+        />
+      </div>
+      <div className='flex items-center gap-5 justify-end w-full md:w-auto'>
+        <span className='text-sm font-normal text-text tracking-tight'>Sort by:</span>
+        <Dropdown
+          label='Sort by'
+          options={sortOptions}
+          selectedValue={sortBy}
+          onValueChange={setSortBy}
+        />
+        <span className='text-sm font-normal text-text tracking-tight'>
+          {productCount} products
+        </span>
+      </div>
     </div>
   );
 };
