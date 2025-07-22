@@ -9,16 +9,24 @@ interface FilterButtonProps {
   className?: string;
 }
 
-const FilterButton: React.FC<FilterButtonProps> = ({ label, isSelected, onClick, className }) => {
-  const baseClass = 'px-2 py-1 text-xs font-medium border-none focus:outline-none transition-colors';
-  const selectedClass = 'bg-primary text-white';
-  const defaultClass = 'bg-gray-100 text-text hover:bg-primary/10';
+const FilterButton: React.FC<FilterButtonProps> = ({
+  label,
+  isSelected,
+  onClick,
+  className,
+}) => {
+  const baseClass =
+    'px-1 py-0.5 text-sm font-medium border-none focus:outline-none transition-colors';
+  const selectedClass = 'text-primary underline';
+  const defaultClass = 'text-text hover:text-primary';
 
   return (
     <button
       key={label}
       onClick={onClick}
-      className={`${baseClass} ${isSelected ? selectedClass : defaultClass} ${className || ''}`}
+      className={`${baseClass} ${isSelected ? selectedClass : defaultClass} ${
+        className || ''
+      }`}
       style={{ minWidth: 0 }}
     >
       {label}
@@ -32,9 +40,14 @@ interface ColorFilterButtonProps {
   onClick: () => void;
 }
 
-const ColorFilterButton: React.FC<ColorFilterButtonProps> = ({ color, isSelected, onClick }) => {
-  const baseClass = 'h-6 w-6 flex items-center justify-center border transition-transform duration-200';
-  const selectedClass = 'ring-2 ring-primary scale-110';
+const ColorFilterButton: React.FC<ColorFilterButtonProps> = ({
+  color,
+  isSelected,
+  onClick,
+}) => {
+  const baseClass =
+    'h-5 w-5 flex items-center justify-center border border-gray-300 transition-transform duration-200 rounded-sm';
+  const selectedClass = 'ring-1 ring-primary scale-110';
   const defaultClass = 'ring-0 hover:scale-105';
   const allColorClass = 'text-xs text-text border border-text/20 bg-white';
 
@@ -42,9 +55,11 @@ const ColorFilterButton: React.FC<ColorFilterButtonProps> = ({ color, isSelected
     <button
       key={color}
       onClick={onClick}
-      className={`${baseClass} ${getColorClass(color)} ${isSelected ? selectedClass : defaultClass} ${color === 'All' ? allColorClass : ''}`}
+      className={`${baseClass} ${getColorClass(color)} ${
+        isSelected ? selectedClass : defaultClass
+      } ${color === 'All' ? allColorClass : ''}`}
       aria-label={`Filter by ${color}`}
-      style={{ minWidth: 0, fontSize: color === 'All' ? '0.75rem' : undefined }}
+      style={{ minWidth: 0, fontSize: color === 'All' ? '0.7rem' : undefined }}
     >
       {color === 'All' && 'All'}
     </button>
@@ -57,11 +72,9 @@ interface FilterSectionProps {
 }
 
 const FilterSection: React.FC<FilterSectionProps> = ({ title, children }) => (
-  <div className='flex flex-col gap-2'>
-    <h3 className='text-sm font-semibold text-text mb-1'>{title}</h3>
-    <div className='flex flex-row flex-wrap gap-1 items-center'>
-      {children}
-    </div>
+  <div className='flex flex-row gap-2 items-center'>
+    <h3 className='text-sm font-normal text-text mr-1'>{title}:</h3>
+    <div className='flex flex-row flex-wrap gap-1 items-center'>{children}</div>
   </div>
 );
 
@@ -97,14 +110,14 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   onClose,
 }) => {
   const inputClass =
-    'w-full border-0 border-b border-gray-200 bg-transparent text-base focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-1 mb-2';
+    'w-full md:w-32 border-0 border-b border-gray-300 bg-transparent text-sm focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-0.5 mb-1 md:mb-0';
 
   if (isMobile) {
     return (
-      <div className='flex flex-col gap-3 relative'>
+      <div className='flex flex-col gap-2 relative'>
         {onClose && (
           <button
-            className='absolute top-2 right-2 text-gray-400 hover:text-primary text-2xl font-bold bg-transparent border-none outline-none'
+            className='absolute top-1 right-1 text-gray-400 hover:text-primary text-lg font-bold bg-transparent border-none outline-none'
             onClick={onClose}
             aria-label='Close filter'
             style={{ lineHeight: 1 }}
@@ -120,7 +133,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           onChange={e => setSearchTerm(e.target.value)}
         />
 
-        <FilterSection title="Category">
+        <FilterSection title='Category'>
           {categories.map(category => (
             <FilterButton
               key={category}
@@ -131,7 +144,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           ))}
         </FilterSection>
 
-        <FilterSection title="Price Range">
+        <FilterSection title='Price'>
           {priceRanges.map(range => (
             <FilterButton
               key={range.label}
@@ -142,7 +155,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           ))}
         </FilterSection>
 
-        <FilterSection title="Color">
+        <FilterSection title='Color'>
           {colors.map(color => (
             <ColorFilterButton
               key={color}
@@ -157,15 +170,15 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   }
 
   return (
-    <div className='flex flex-col md:flex-row md:items-center md:justify-between md:gap-4 mb-8'>
+    <div className='flex flex-row items-center gap-4 mb-4'>
       <input
         type='text'
         placeholder='Search...'
-        className='w-full md:w-48 border-0 border-b border-gray-300 bg-transparent text-base md:text-sm focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-1 mb-1 md:mb-0'
+        className={` ${inputClass}`}
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
       />
-      <div className='flex flex-wrap gap-1 items-center w-full md:w-auto'>
+      <FilterSection title='Category'>
         {categories.map(category => (
           <FilterButton
             key={category}
@@ -174,8 +187,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             onClick={() => setSelectedCategory(category)}
           />
         ))}
-      </div>
-      <div className='flex flex-wrap gap-1 items-center w-full md:w-auto'>
+      </FilterSection>
+      <FilterSection title='Price'>
         {priceRanges.map(range => (
           <FilterButton
             key={range.label}
@@ -184,8 +197,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             onClick={() => setSelectedPriceRange(range.label)}
           />
         ))}
-      </div>
-      <div className='flex flex-wrap gap-1 items-center w-full md:w-auto'>
+      </FilterSection>
+      <FilterSection title='Color'>
         {colors.map(color => (
           <ColorFilterButton
             key={color}
@@ -194,7 +207,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             onClick={() => setSelectedColor(color)}
           />
         ))}
-      </div>
+      </FilterSection>
     </div>
   );
 };
