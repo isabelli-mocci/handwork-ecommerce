@@ -2,6 +2,7 @@ import React from 'react';
 import HeroSection from '../../components/sections/HeroSection';
 import CategorySection from '../../components/sections/CategorySection';
 import PopularToysSection from '../../components/sections/PopularToySection';
+import ValuePropositionSection from '../../components/sections/ValuePropositionSection';
 
 
 const HomePage: React.FC = () => {
@@ -11,6 +12,7 @@ const HomePage: React.FC = () => {
         <HeroSection />
         <CategorySection />
         <PopularToysSection />
+        <ValuePropositionSection />
       </main>
     </div>
   );
