@@ -33,7 +33,7 @@ const valuePropositions = [
 
 const ValuePropositionSection: React.FC = () => {
   return (
-    <section className="py-10 lg:py-24 bg-secondary">
+    <section className="py-10 lg:py-24 bg-white/50">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {valuePropositions.map(prop => (
