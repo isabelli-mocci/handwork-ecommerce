@@ -249,3 +249,11 @@ export const priceRanges = [
   { label: '$171 - $190', min: 171, max: 190 },
   { label: '$191 - $220', min: 191, max: 220 },
 ];
+
+export const sortOptions = [
+  { value: 'default', label: 'Default' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'name-asc', label: 'Name: A to Z' },
+  { value: 'name-desc', label: 'Name: Z to A' },
+];
