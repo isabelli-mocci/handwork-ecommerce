@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProductCard from '../../components/common/ProductCard';
-import { products, priceRanges } from '../../data/productsData';
+import { products, priceRanges, sortOptions } from '../../data/productsData';
 import { getUniqueValues } from '../../utils/productFilters';
 import { useProductFilters } from '../../hooks/useProductFilters';
 import FilterControls from '../../components/common/FilterControls';
@@ -15,10 +15,13 @@ const ProductsPage: React.FC = () => {
     setSelectedPriceRange,
     selectedColor,
     setSelectedColor,
+    sortBy,
+    setSortBy,
     filteredProducts,
   } = useProductFilters(products, priceRanges);
 
-  const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const [showMobileFilterModal, setShowMobileFilterModal] = useState(false);
+
   const productCategories = getUniqueValues(products, 'category');
   const productColors = getUniqueValues(products, 'color');
 
@@ -40,17 +43,40 @@ const ProductsPage: React.FC = () => {
             Choose your companion and start a memory worth holding onto.
           </strong>
         </p>
-        <div className='mb-6 flex md:hidden'>
+
+        {/* Mobile Filter & Sort Button + Product Count */}
+        <div className='mb-6 flex justify-between items-center md:hidden'>
           <button
-            className='ml-auto px-4 py-2 rounded bg-text text-white text-xs shadow-sm focus:outline-none'
-            onClick={() => setShowMobileFilter(true)}
+            className='px-4 py-2 rounded bg-text text-white text-xs shadow-sm focus:outline-none flex items-center gap-2'
+            onClick={() => setShowMobileFilterModal(true)}
           >
-            Filter
+            <svg
+              className='w-4 h-4'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM4 10a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zM4 16a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z'
+              ></path>
+            </svg>
+            Filter & Sort
           </button>
+          <span className='text-sm text-text/80'>
+            {filteredProducts.length} products
+          </span>
         </div>
-        {showMobileFilter && (
-          <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40'>
-            <div className='bg-white rounded-lg shadow-lg w-11/12 max-w-xs p-5 relative animate-fade-in'>
+
+        {/* Mobile Filter Modal */}
+        {showMobileFilterModal && (
+          <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60'>
+            <div className='bg-white rounded-lg shadow-lg w-11/12 max-w-md p-4 relative animate-fade-in md:hidden h-[90vh]'>
+              {' '}
+              {/* Adjusted max-w and h */}
               <FilterControls
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
@@ -63,12 +89,18 @@ const ProductsPage: React.FC = () => {
                 colors={productColors}
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                sortOptions={sortOptions}
                 isMobile
-                onClose={() => setShowMobileFilter(false)}
+                onClose={() => setShowMobileFilterModal(false)}
+                productCount={filteredProducts.length}
               />
             </div>
           </div>
         )}
+
+        {/* Desktop Filter Controls */}
         <div className='mb-8 hidden md:flex'>
           <FilterControls
             searchTerm={searchTerm}
@@ -82,8 +114,14 @@ const ProductsPage: React.FC = () => {
             colors={productColors}
             selectedColor={selectedColor}
             setSelectedColor={setSelectedColor}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            sortOptions={sortOptions}
+            productCount={filteredProducts.length}
           />
         </div>
+
+        {/* Product Grid */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8'>
           {filteredProducts.length > 0 ? (
             filteredProducts.map(product => (
