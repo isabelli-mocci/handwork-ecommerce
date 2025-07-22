@@ -74,7 +74,7 @@ const PopularToyCard: React.FC<{ toy: Toy }> = ({ toy }) => (
 );
 
 const PopularToysSection: React.FC = () => (
-  <section className='py-8'>
+  <section id="popular-toys-section" className='py-8'>
     <div className='container mx-auto px-4'>
       <h2 className='font-cardo text-2xl font-bold text-left mb-8 uppercase'>
         Popular Toys
