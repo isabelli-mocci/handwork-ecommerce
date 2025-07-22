@@ -111,7 +111,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   };
   if (!open) return null;
   return (
-    <div className='lg:hidden absolute top-full left-0 w-full p-4 z-40'>
+    <div className='bg-white/90 lg:hidden absolute top-full left-0 w-full p-4 z-40'>
       <ul className='flex flex-col gap-4'>
         {NAV_LINKS.map(link => (
           <li key={link.to}>
@@ -162,7 +162,7 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className='shadow-sm p-4 sticky top-0 z-50'>
+    <header className='shadow-sm p-4 sticky top-0 z-50 '>
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center'>
           <div className='flex items-center lg:hidden'>
