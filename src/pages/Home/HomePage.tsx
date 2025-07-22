@@ -3,6 +3,7 @@ import HeroSection from '../../components/sections/HeroSection';
 import CategorySection from '../../components/sections/CategorySection';
 import PopularToysSection from '../../components/sections/PopularToySection';
 import ValuePropositionSection from '../../components/sections/ValuePropositionSection';
+import NewsletterSection from '../../components/sections/NewsletterSection';
 
 
 const HomePage: React.FC = () => {
@@ -13,6 +14,7 @@ const HomePage: React.FC = () => {
         <CategorySection />
         <PopularToysSection />
         <ValuePropositionSection />
+        <NewsletterSection />
       </main>
     </div>
   );
