@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProductCard from '../../components/common/ProductCard';
-import { products, priceRanges } from './productsData';
+import { products, priceRanges } from '../../data/productsData';
 import { getUniqueValues } from '../../utils/productFilters';
 import { useProductFilters } from '../../hooks/useProductFilters';
 import FilterControls from '../../components/common/FilterControls';

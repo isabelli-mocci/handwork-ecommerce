@@ -1,25 +1,25 @@
-import type { Product } from '../../components/common/ProductCard';
+import type { Product } from '../components/common/ProductCard';
 
-import bearLadyVelvetImg from '../../assets/images/bear-lady-velvet.png';
-import bunnyDahliaImg from '../../assets/images/bunny-dahlia.png';
-import bunnyFleurDeLisImg from '../../assets/images/bunny-fleur-de-lis.png';
-import catLordCrimsonImg from '../../assets/images/cat-lord-crimson.png';
-import catVioletImg from '../../assets/images/cat-violet.png';
-import chickenWillowbelleImg from '../../assets/images/chicken-willowbelle.png';
-import cowDaisyImg from '../../assets/images/cow-daisy.png';
-import deerCharlieImg from '../../assets/images/deer-charlie.png';
-import dogGigiImg from '../../assets/images/dog-gigi.png';
-import duckPeonyImg from '../../assets/images/duck-peony.png';
-import elephantPrincessPearlImg from '../../assets/images/elephant-princess-pearl.png';
-import foxCelesteImg from '../../assets/images/fox-celeste.png';
-import giraffeSylvieImg from '../../assets/images/giraffe-sylvie.png';
-import monkeySunnyImg from '../../assets/images/monkey-sunny.png';
-import mouseCrystalImg from '../../assets/images/mouse-crystal.png';
-import owlPenelopeImg from '../../assets/images/owl-penelope.png';
-import penguinBlossomImg from '../../assets/images/penguin-blossom.png';
-import pigOliviaImg from '../../assets/images/pig-olivia.png';
-import sheepMargotImg from '../../assets/images/sheep-margot.png';
-import squirrelLilybelleImg from '../../assets/images/squirrel-lilybelle.png';
+import bearLadyVelvetImg from '../assets/images/bear-lady-velvet.png';
+import bunnyDahliaImg from '../assets/images/bunny-dahlia.png';
+import bunnyFleurDeLisImg from '../assets/images/bunny-fleur-de-lis.png';
+import catLordCrimsonImg from '../assets/images/cat-lord-crimson.png';
+import catVioletImg from '../assets/images/cat-violet.png';
+import chickenWillowbelleImg from '../assets/images/chicken-willowbelle.png';
+import cowDaisyImg from '../assets/images/cow-daisy.png';
+import deerCharlieImg from '../assets/images/deer-charlie.png';
+import dogGigiImg from '../assets/images/dog-gigi.png';
+import duckPeonyImg from '../assets/images/duck-peony.png';
+import elephantPrincessPearlImg from '../assets/images/elephant-princess-pearl.png';
+import foxCelesteImg from '../assets/images/fox-celeste.png';
+import giraffeSylvieImg from '../assets/images/giraffe-sylvie.png';
+import monkeySunnyImg from '../assets/images/monkey-sunny.png';
+import mouseCrystalImg from '../assets/images/mouse-crystal.png';
+import owlPenelopeImg from '../assets/images/owl-penelope.png';
+import penguinBlossomImg from '../assets/images/penguin-blossom.png';
+import pigOliviaImg from '../assets/images/pig-olivia.png';
+import sheepMargotImg from '../assets/images/sheep-margot.png';
+import squirrelLilybelleImg from '../assets/images/squirrel-lilybelle.png';
 
 export const products: Product[] = [
   {
@@ -244,7 +244,7 @@ export const colors = [
 ];
 
 export const priceRanges = [
-  { label: 'All', min: 0, max: 9999 },
+  { label: 'All', min: 0, max: 300 },
   { label: '$150 - $170', min: 150, max: 170 },
   { label: '$171 - $190', min: 171, max: 190 },
   { label: '$191 - $220', min: 191, max: 220 },
