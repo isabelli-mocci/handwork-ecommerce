@@ -1,13 +1,17 @@
 import { useState, useMemo } from 'react';
 import type { Product } from '../components/common/ProductCard';
-import { filterProducts } from '../utils/productFilters';
+import { filterProducts, sortProducts } from '../utils/productFilters';
 import type { PriceRange } from '../utils/productFilters';
 
-export function useProductFilters(allProducts: Product[], availablePriceRanges: PriceRange[]) {
+export function useProductFilters(
+  allProducts: Product[],
+  availablePriceRanges: PriceRange[]
+) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedPriceRange, setSelectedPriceRange] = useState('All');
   const [selectedColor, setSelectedColor] = useState('All');
+  const [sortBy, setSortBy] = useState<string>('best-selling');
 
   const filteredProducts = useMemo(
     () =>
@@ -19,7 +23,19 @@ export function useProductFilters(allProducts: Product[], availablePriceRanges: 
         selectedColor,
         availablePriceRanges
       ),
-    [allProducts, searchTerm, selectedCategory, selectedPriceRange, selectedColor, availablePriceRanges]
+    [
+      allProducts,
+      searchTerm,
+      selectedCategory,
+      selectedPriceRange,
+      selectedColor,
+      availablePriceRanges,
+    ]
+  );
+
+  const filteredAndSortedProducts = useMemo(
+    () => sortProducts(filteredProducts, sortBy),
+    [filteredProducts, sortBy]
   );
 
   return {
@@ -31,6 +47,8 @@ export function useProductFilters(allProducts: Product[], availablePriceRanges: 
     setSelectedPriceRange,
     selectedColor,
     setSelectedColor,
-    filteredProducts,
+    sortBy,
+    setSortBy,
+    filteredProducts: filteredAndSortedProducts,
   };
 }
