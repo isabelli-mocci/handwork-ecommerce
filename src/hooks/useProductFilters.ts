@@ -11,7 +11,7 @@ export function useProductFilters(
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedPriceRange, setSelectedPriceRange] = useState('All');
   const [selectedColor, setSelectedColor] = useState('All');
-  const [sortBy, setSortBy] = useState<string>('best-selling');
+  const [sortBy, setSortBy] = useState<string>('default');
 
   const filteredProducts = useMemo(
     () =>
