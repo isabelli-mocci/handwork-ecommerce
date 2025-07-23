@@ -1,5 +1,4 @@
-import { PiSortAscendingThin } from 'react-icons/pi';
-import React, { useState } from 'react';
+import React from 'react';
 import ProductList from '../../components/common/ProductList';
 import { products, priceRanges, sortOptions } from '../../data/productsData';
 import { getUniqueValues } from '../../utils/productFilters.utils';
@@ -21,8 +20,6 @@ const ProductsPage: React.FC = () => {
     setSortBy,
     filteredProducts,
   } = useProductFilters(products, priceRanges);
-
-  const [showMobileFilterModal, setShowMobileFilterModal] = useState(false);
 
   const productCategories = getUniqueValues(products, 'category');
   const productColors = getUniqueValues(products, 'color');
@@ -46,44 +43,25 @@ const ProductsPage: React.FC = () => {
           </strong>
         </p>
 
-        <div className='mb-6 flex justify-between items-center md:hidden lg:hidden'>
-          <button
-            className='px-4 py-2 rounded bg-text text-white text-xs shadow-sm focus:outline-none flex items-center gap-2'
-            onClick={() => setShowMobileFilterModal(true)}
-          >
-            <PiSortAscendingThin className='w-5 h-5' />
-            Filter & Sort
-          </button>
-          <span className='text-sm text-text/80'>
-            {filteredProducts.length} products
-          </span>
+        <div className='mb-8 block lg:hidden'>
+          <SidebarFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            categories={productCategories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            priceRanges={priceRanges}
+            selectedPriceRange={selectedPriceRange}
+            setSelectedPriceRange={setSelectedPriceRange}
+            colors={productColors}
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            sortOptions={sortOptions}
+            productCount={filteredProducts.length}
+          />
         </div>
-
-        {showMobileFilterModal && (
-          <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60'>
-            <div className='bg-white rounded-lg shadow-lg w-11/12 max-w-md p-4 relative animate-fade-in md:hidden h-[90vh]'>
-              {' '}
-              <FilterControls
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                categories={productCategories}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                priceRanges={priceRanges}
-                selectedPriceRange={selectedPriceRange}
-                setSelectedPriceRange={setSelectedPriceRange}
-                colors={productColors}
-                selectedColor={selectedColor}
-                setSelectedColor={setSelectedColor}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                sortOptions={sortOptions}
-                onClose={() => setShowMobileFilterModal(false)}
-                productCount={filteredProducts.length}
-              />
-            </div>
-          </div>
-        )}
 
         <div className='mb-8 hidden lg:flex'>
           <FilterControls
@@ -105,25 +83,7 @@ const ProductsPage: React.FC = () => {
           />
         </div>
 
-        <div className='hidden md:block lg:hidden mb-8'>
-          <SidebarFilter
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            categories={productCategories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            priceRanges={priceRanges}
-            selectedPriceRange={selectedPriceRange}
-            setSelectedPriceRange={setSelectedPriceRange}
-            colors={productColors}
-            selectedColor={selectedColor}
-            setSelectedColor={setSelectedColor}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            sortOptions={sortOptions}
-            productCount={filteredProducts.length}
-          />
-        </div>
+        {/* SidebarFilter para tablet removido para evitar duplicidade de botão/modal */}
 
         <ProductList products={filteredProducts} />
       </div>
