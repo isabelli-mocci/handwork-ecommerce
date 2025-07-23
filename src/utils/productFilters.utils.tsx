@@ -1,3 +1,29 @@
+export function getDisplayLabel(dropdownLabel: string, optionLabel: string) {
+  if (optionLabel === 'All') {
+    switch (dropdownLabel) {
+      case 'Category':
+      case 'Price':
+      case 'Color':
+        return dropdownLabel;
+      default:
+        return optionLabel;
+    }
+  }
+  return optionLabel;
+}
+import type { DropdownOption } from '../types/dropdown.types';
+export function getColorDropdownOptions(colors: string[]): DropdownOption[] {
+  return colors.map(color => ({
+    value: color,
+    label: color,
+    icon:
+      color !== 'All' ? (
+        <span
+          className={`w-3 h-3 rounded-full inline-block mr-1 ${getColorClass(color)}`}
+        />
+      ) : null,
+  }));
+}
 import type { PriceRange, SortOption } from '../types/productFilters.types';
 import type { Product } from '../models/product.model';
 
