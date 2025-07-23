@@ -61,9 +61,18 @@ export function filterProducts(
   priceRanges: PriceRange[]
 ): Product[] {
   const defaultPriceRange = priceRanges[0];
-  const selectedRange =
-    priceRanges.find(range => range.label === selectedPriceRangeLabel) ||
-    defaultPriceRange;
+  const sliderValue = Number(selectedPriceRangeLabel);
+  let matchesPriceFn: (product: Product) => boolean;
+  if (!isNaN(sliderValue) && sliderValue > 0) {
+    matchesPriceFn = (product: Product) => product.priceValue >= sliderValue;
+  } else {
+    const selectedRange =
+      priceRanges.find(range => range.label === selectedPriceRangeLabel) ||
+      defaultPriceRange;
+    matchesPriceFn = (product: Product) =>
+      product.priceValue >= selectedRange.min &&
+      product.priceValue <= selectedRange.max;
+  }
 
   return products.filter(product => {
     const matchesSearch =
@@ -71,9 +80,7 @@ export function filterProducts(
       product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
       selectedCategory === 'All' || product.category === selectedCategory;
-    const matchesPrice =
-      product.priceValue >= selectedRange.min &&
-      product.priceValue <= selectedRange.max;
+    const matchesPrice = matchesPriceFn(product);
     const matchesColor =
       selectedColor === 'All' || product.color === selectedColor;
 
