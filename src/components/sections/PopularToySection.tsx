@@ -1,6 +1,6 @@
 import React from 'react';
-import ProductCard from '../common/ProductCard';
-import type { Product } from '../common/ProductCard';
+import ProductList from '../common/ProductList';
+import type { Product } from '../../models/product.model';
 import catVioletImg from '../../assets/images/cat-violet.png';
 import sheepMargotImg from '../../assets/images/sheep-margot.png';
 import bunnyFleurDeLisImg from '../../assets/images/bunny-fleur-de-lis.png';
@@ -58,14 +58,7 @@ const PopularToysSection: React.FC = () => (
       <h2 className='font-cardo text-2xl font-bold text-left mb-8 uppercase'>
         Popular Toys
       </h2>
-      <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
-        {popularToys.map(toy => (
-          <ProductCard
-            key={toy.id}
-            product={toy}
-          />
-        ))}
-      </div>
+      <ProductList products={popularToys} className='grid-cols-2 lg:grid-cols-4 gap-4' />
     </div>
   </section>
 );
