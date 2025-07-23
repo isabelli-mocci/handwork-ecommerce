@@ -1,4 +1,4 @@
-import type { Product } from '../components/common/ProductCard';
+import type { Product } from '../models/product.model';
 
 import bearLadyVelvetImg from '../assets/images/bear-lady-velvet.png';
 import bunnyDahliaImg from '../assets/images/bunny-dahlia.png';
