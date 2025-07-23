@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 
 interface ProductListProps {
   products: Product[];
-  onFavoriteClick?: (product: Product) => void;
+  onFavoriteClick?: (id: string) => void;
   isFavorite?: (product: Product) => boolean;
   actionLabel?: string;
   emptyState?: React.ReactNode;
@@ -25,7 +25,7 @@ const ProductList: React.FC<ProductListProps> = ({
         <ProductCard
           key={product.id}
           product={product}
-          onFavoriteClick={onFavoriteClick}
+          onFavoriteClick={onFavoriteClick ? () => onFavoriteClick(String(product.id)) : undefined}
           isFavorite={isFavorite ? isFavorite(product) : false}
           actionLabel={actionLabel}
         />
