@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import type { Product } from '../components/common/ProductCard';
-import { filterProducts, sortProducts } from '../utils/productFilters';
-import type { PriceRange } from '../utils/productFilters';
+import type { Product } from '../models/product.model';
+import { filterProducts, sortProducts } from '../utils/productFilters.utils';
+import type { PriceRange } from '../types/productFilters.types';
 
 export function useProductFilters(
   allProducts: Product[],
