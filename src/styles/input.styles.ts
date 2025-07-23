@@ -1,0 +1,1 @@
+export const INPUT_CLASS = 'w-full md:w-56 border-0 border-b-2 border-gray-300 bg-transparent text-sm focus:outline-none focus:border-primary placeholder:text-text/40 px-0 py-1 transition-all duration-200';
