@@ -5,44 +5,44 @@ import type { FilterControlsProps } from '../../types/filterControls.types';
 
 type SidebarFilterProps = FilterControlsProps;
 
-const BUTTON_CLASS = 'hidden md:flex fixed left-6 bottom-8 z-[1001] items-center gap-2 py-2 px-4 text-base bg-white border border-gray-300 rounded shadow-md cursor-pointer';
-const OVERLAY_CLASS = 'hidden md:block fixed inset-0 bg-black/30 z-[1000] transition-opacity duration-300';
-const ASIDE_CLASS = 'hidden md:flex flex-col fixed top-0 left-0 h-screen w-[340px] max-w-[95vw] bg-[#f5f0ec] shadow-2xl z-[1002] overflow-y-auto p-8 pt-10 transition-all duration-300';
+const BUTTON_CLASS = `
+  flex items-center gap-1 md:gap-2 justify-center w-fit px-1 md:px-2 py-1 md:py-2 mt-4 mb-6
+  bg-background border-b border-text/60 text-md md:text-lg sticky top-0 z-[1001]
+`;
 
-function openSidebar(setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) {
-  setIsOpen(true);
-}
-
-function closeSidebar(setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) {
-  setIsOpen(false);
-}
-
-const SidebarFilter: React.FC<SidebarFilterProps> = props => {
+function SidebarFilter(props: SidebarFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const asideRef = React.useRef<HTMLElement>(null);
-
-  React.useEffect(() => {
-    if (!isOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeSidebar(setIsOpen);
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    asideRef.current?.focus();
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen]);
+  const asideRef = React.useRef<HTMLDivElement>(null);
+  const OVERLAY_CLASS = 'fixed inset-0 bg-black/40 z-[1000]';
+  const ASIDE_CLASS =
+    'fixed top-0 right-0 h-full w-full max-w-md z-[1001] bg-[#f5f0ec] transition-all duration-300';
+  const openSidebar = (
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  ) => setOpen(true);
+  const closeSidebar = (
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  ) => setOpen(false);
 
   return (
-    <div>
-      <button
-        className={BUTTON_CLASS}
-        onClick={() => openSidebar(setIsOpen)}
-        aria-label='Open filters'
+    <div className='flex items-center justify-between w-full'>
+      <div>
+        <button
+          className={BUTTON_CLASS}
+          onClick={() => openSidebar(setIsOpen)}
+          aria-label='Open filters and sort options'
+          tabIndex={0}
+          title='Open filters and sort options'
+        >
+          <PiSortAscendingThin className=' w-5 h-6 md:w-6 md:h-6 text-text' />
+          <span>Filters & Sort</span>
+        </button>
+      </div>
+      <span
+        className='bg-background border-b border-text/60 text-md md:text-lg py-1 select-none
+        '
       >
-        <PiSortAscendingThin className='w-5 h-5 mr-2 inline-block align-middle' />
-        Filters
-      </button>
+        {props.productCount} products
+      </span>
       {isOpen && (
         <div
           className={OVERLAY_CLASS}
@@ -62,10 +62,37 @@ const SidebarFilter: React.FC<SidebarFilterProps> = props => {
         aria-modal={isOpen}
         role='dialog'
       >
-        <FilterControls {...props} />
+        <div className='flex items-center justify-between gap-2 px-6 py-4 border-b border-primary/10 bg-[#f5f0ec]/95 rounded-tr-3xl'>
+          <span className='text-lg font-semibold uppercase'>Filters</span>
+          <div className='flex gap-2 items-center'>
+            <button
+              onClick={() => closeSidebar(setIsOpen)}
+              aria-label='Close filters'
+              className='w-10 h-10 flex items-center justify-center text-primary text-2xl'
+              type='button'
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className='flex-1 overflow-y-auto px-6 py-4'>
+          <FilterControls
+            {...props}
+            hideSearchOnMobileTablet
+          />
+        </div>
+        <div className='sticky bottom-0 left-0 w-full bg-[#f5f0ec]/95 px-6 py-4 border-t border-primary/10 flex justify-center z-10'>
+          <button
+            onClick={() => closeSidebar(setIsOpen)}
+            className='font-cardo px-24 py-2 text-text border border-text font-black uppercase focus:outline-none focus:ring-2 focus:ring-primary/40'
+            type='button'
+          >
+            View Products
+          </button>
+        </div>
       </aside>
     </div>
   );
-};
+}
 
 export default SidebarFilter;
