@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PiSortAscendingThin } from 'react-icons/pi';
 import FilterControls from './FilterControls';
-import type { FilterControlsProps } from './FilterControls';
+import type { FilterControlsProps } from '../../types/filterControls.types';
 
 type SidebarFilterProps = FilterControlsProps;
 
