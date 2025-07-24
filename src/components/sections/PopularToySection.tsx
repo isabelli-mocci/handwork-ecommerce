@@ -58,7 +58,7 @@ const PopularToysSection: React.FC = () => {
       className='py-8'
     >
       <div className='container mx-auto px-4'>
-        <h2 className='font-cardo text-2xl font-bold text-left mb-8 uppercase'>
+        <h2 className='font-cardo text-2xl font-black text-left mb-8 uppercase'>
           Popular Toys
         </h2>
         <ProductList
