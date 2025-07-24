@@ -1,76 +1,115 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ContactPage: React.FC = () => {
+const CONTACT_TITLE = 'Contact Us';
+const CONTACT_SUBTITLE = 'We are here to help';
+const CONTACT_DESCRIPTION = "If you'd like to get in contact, please fill in the form below or send us an email to hello@mocciandco.com. We would love to hear from you!";
+const FORM_FIELDS = {
+  name: '',
+  email: '',
+  phone: '',
+  comment: '',
+};
+
+const ContactUsPage: React.FC = () => {
+  const [form, setForm] = useState(FORM_FIELDS);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    if (!form.name.trim() || !form.email.trim() || !form.comment.trim()) {
+      setError('Name, Email and Comment are required.');
+      return false;
+    }
+    setError(null);
+    return true;
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    setForm(FORM_FIELDS);
+    alert('Message sent successfully!');
+  };
+
   return (
-    <div className='flex justify-center'>
-      <div className='p-6 sm:p-8 lg:p-10 max-w-2xl w-full'>
-        <h1 className='font-cardo text-3xl font-black sm:text-3xl mb-8 uppercase'>
-          Contact us
-        </h1>
-
-        <div className='mb-10'>
-          <h2 className='text-md sm:text-xl font-medium mb-4'>
-            We are here to help
-          </h2>
-
-          <p className=' text-base sm:text-lg mb-2 text-justify'>
-            If you'd like to get in contact, please fill in the form below or
-            send us an email to hello@mocciandco.com we would love to hear
-            from you!
-          </p>
+    <main className="flex justify-center">
+      <section className="p-6 sm:p-8 lg:p-10 max-w-2xl w-full">
+        <h1 className="font-cardo text-3xl font-black sm:text-3xl mb-8 uppercase">{CONTACT_TITLE}</h1>
+        <div className="mb-10">
+          <h2 className="text-md sm:text-xl font-medium mb-4">{CONTACT_SUBTITLE}</h2>
+          <p className="text-base sm:text-lg mb-2 text-justify">{CONTACT_DESCRIPTION}</p>
         </div>
-
-        <form className='space-y-6'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+        <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <input
-                type='text'
-                id='name'
-                name='name'
-                placeholder='Name'
-                className='mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base'
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Name*"
+                value={form.name}
+                onChange={handleChange}
+                className="mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base"
+                required
+                aria-required="true"
               />
             </div>
             <div>
               <input
-                type='email'
-                id='email'
-                name='email'
-                placeholder='Email'
-                className='mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base'
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email*"
+                value={form.email}
+                onChange={handleChange}
+                className="mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base"
+                required
+                aria-required="true"
               />
             </div>
           </div>
           <div>
             <input
-              type='tel'
-              id='phone'
-              name='phone'
-              placeholder='Phone number'
-              className='mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base'
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Phone number"
+              value={form.phone}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base"
             />
           </div>
           <div>
             <textarea
-              id='comment'
-              name='comment'
+              id="comment"
+              name="comment"
               rows={6}
-              placeholder='Comment'
-              className='mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base resize-y'
+              placeholder="Comment*"
+              value={form.comment}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-3 border border-text shadow-sm placeholder-text focus:outline-none focus:ring-accent focus:border-accent sm:text-base resize-y"
+              required
+              aria-required="true"
             ></textarea>
           </div>
+          {error && (
+            <div className="text-red-600 text-sm font-medium">{error}</div>
+          )}
           <div>
             <button
-              type='submit'
-              className='w-auto px-8 py-3 bg-primary text-white font-medium  shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-base'
+              type="submit"
+              className="w-auto px-8 py-3 bg-primary text-white font-medium shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-base"
             >
               Send
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
-export default ContactPage;
+export default ContactUsPage;
