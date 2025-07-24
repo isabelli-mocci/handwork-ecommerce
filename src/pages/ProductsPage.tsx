@@ -1,11 +1,11 @@
 import React from 'react';
-import ProductList from '../../components/common/ProductList';
-import { products, priceRanges, sortOptions } from '../../data/productsData';
-import { getUniqueValues } from '../../utils/productFilters.utils';
-import { useProductFilters } from '../../hooks/useProductFilters';
-import { useFavorites } from '../../hooks/useFavoritesHooks';
-import FilterControls from '../../components/common/FilterControls';
-import SidebarFilter from '../../components/common/SidebarFilter';
+import ProductList from '../components/common/ProductList';
+import { products, priceRanges, sortOptions } from '../data/productsData';
+import { getUniqueValues } from '../utils/productFilters.utils';
+import { useProductFilters } from '../hooks/useProductFilters';
+import { useFavorites } from '../hooks/useFavoritesHooks';
+import FilterControls from '../components/common/FilterControls';
+import SidebarFilter from '../components/common/SidebarFilter';
 
 const ProductsPage: React.FC = () => {
   const {
