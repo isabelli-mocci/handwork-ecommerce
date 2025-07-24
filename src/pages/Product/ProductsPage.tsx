@@ -3,6 +3,7 @@ import ProductList from '../../components/common/ProductList';
 import { products, priceRanges, sortOptions } from '../../data/productsData';
 import { getUniqueValues } from '../../utils/productFilters.utils';
 import { useProductFilters } from '../../hooks/useProductFilters';
+import { useFavorites } from '../../hooks/useFavoritesHooks';
 import FilterControls from '../../components/common/FilterControls';
 import SidebarFilter from '../../components/common/SidebarFilter';
 
@@ -20,6 +21,8 @@ const ProductsPage: React.FC = () => {
     setSortBy,
     filteredProducts,
   } = useProductFilters(products, priceRanges);
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   const productCategories = getUniqueValues(products, 'category');
   const productColors = getUniqueValues(products, 'color');
@@ -83,7 +86,11 @@ const ProductsPage: React.FC = () => {
           />
         </div>
 
-        <ProductList products={filteredProducts} />
+        <ProductList
+          products={filteredProducts}
+          onFavoriteClick={toggleFavorite}
+          isFavorite={product => isFavorite(String(product.id))}
+        />
       </div>
     </div>
   );

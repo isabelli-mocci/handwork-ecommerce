@@ -1,0 +1,9 @@
+.pop-animation {
+  animation: pop-animation 0.5s cubic-bezier(.4,1.2,.6,1);
+}
+@keyframes pop-animation {
+  0% { transform: scale(1); opacity: 1; }
+  30% { transform: scale(1.12); opacity: 0.92; }
+  60% { transform: scale(0.98); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}

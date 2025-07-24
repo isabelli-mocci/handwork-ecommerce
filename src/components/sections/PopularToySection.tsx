@@ -5,6 +5,7 @@ import catVioletImg from '../../assets/images/cat-violet.png';
 import sheepMargotImg from '../../assets/images/sheep-margot.png';
 import bunnyFleurDeLisImg from '../../assets/images/bunny-fleur-de-lis.png';
 import cowDaisyImg from '../../assets/images/cow-daisy.png';
+import { useFavorites } from '../../hooks/useFavoritesHooks';
 
 const popularToys: Product[] = [
   {
@@ -49,18 +50,26 @@ const popularToys: Product[] = [
   },
 ];
 
-const PopularToysSection: React.FC = () => (
-  <section
-    id='popular-toys-section'
-    className='py-8'
-  >
-    <div className='container mx-auto px-4'>
-      <h2 className='font-cardo text-2xl font-bold text-left mb-8 uppercase'>
-        Popular Toys
-      </h2>
-      <ProductList products={popularToys} className='grid-cols-2 lg:grid-cols-4 gap-4' />
-    </div>
-  </section>
-);
+const PopularToysSection: React.FC = () => {
+  const { toggleFavorite, isFavorite } = useFavorites();
+  return (
+    <section
+      id='popular-toys-section'
+      className='py-8'
+    >
+      <div className='container mx-auto px-4'>
+        <h2 className='font-cardo text-2xl font-bold text-left mb-8 uppercase'>
+          Popular Toys
+        </h2>
+        <ProductList
+          products={popularToys}
+          onFavoriteClick={toggleFavorite}
+          isFavorite={product => isFavorite(String(product.id))}
+          className='grid-cols-2 lg:grid-cols-4 gap-4'
+        />
+      </div>
+    </section>
+  );
+};
 
 export default PopularToysSection;
