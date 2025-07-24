@@ -145,10 +145,7 @@ function Logo() {
 function HeaderIcons() {
   return (
     <div className='flex items-center gap-1 lg:ml-auto'>
-      <button className='hidden lg:block text-xl p-2'>
-        <HiOutlineMagnifyingGlass aria-label='Search' />
-      </button>
-      <button className='text-xl'>
+      <button className='text-xl lg:mr-3'>
         <HiOutlineHeart aria-label='Wishlist' />
       </button>
       <button className='text-text-color text-xl p-2'>
@@ -162,7 +159,7 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className='shadow-sm p-4 sticky top-0 z-50 '>
+    <header className='shadow-sm p-4 sticky top-0 z-50 bg-background'>
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center'>
           <div className='flex items-center lg:hidden'>
