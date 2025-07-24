@@ -19,7 +19,7 @@ const NotFoundPage: React.FC = () => (
     <p className="text-base md:text-lg text-text/80 mb-8 max-w-md">{ERROR_MESSAGE}</p>
     <Link
       to="/"
-      className="w-full max-w-xs px-6 py-3 bg-primary text-white font-medium rounded-md hover:bg-primary/90 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+      className="w-full max-w-xs px-6 py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
     >
       {HOMEPAGE_LABEL}
     </Link>
