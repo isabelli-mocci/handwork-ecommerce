@@ -16,7 +16,7 @@ const ProductList: React.FC<ProductListProps> = ({
   onFavoriteClick,
   isFavorite,
   actionLabel = 'Choose Options',
-  emptyState = <p className="col-span-full text-center text-lg text-text/70 py-10">Nenhum produto encontrado.</p>,
+  emptyState = <p className="col-span-full text-center text-lg text-text/70 py-10">No products found.</p>,
   className = '',
 }) => (
   <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 ${className}`}>

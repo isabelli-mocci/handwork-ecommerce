@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +8,6 @@ const categories = [
   { name: 'FARMCORE TOYS', link: '/products?category=farmcore-toys' },
   { name: 'ANIMAL TOYS', link: '/products?category=animal-toys' },
 ];
-
 
 const CategorySection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +21,6 @@ const CategorySection: React.FC = () => {
   return (
     <section className='py-10'>
       <div className='container mx-auto px-4 relative'>
-        {/* Arrows for desktop */}
         <button
           type='button'
           className='hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 z-10 p-3 transition disabled:opacity-30'

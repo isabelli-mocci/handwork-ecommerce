@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PiSortAscendingThin } from 'react-icons/pi';
+import { PiSortAscendingThin, PiListHeartLight } from 'react-icons/pi';
 import FilterControls from './FilterControls';
 import type { FilterControlsProps } from '../../types/filterControls.types';
 
@@ -24,8 +24,8 @@ function SidebarFilter(props: SidebarFilterProps) {
   ) => setOpen(false);
 
   return (
-    <div className='flex items-center justify-between w-full'>
-      <div>
+    <div className='flex items-center w-full'>
+      <div className='flex-shrink-0'>
         <button
           className={BUTTON_CLASS}
           onClick={() => openSidebar(setIsOpen)}
@@ -37,12 +37,12 @@ function SidebarFilter(props: SidebarFilterProps) {
           <span>Filters & Sort</span>
         </button>
       </div>
-      <span
-        className='bg-background border-b border-text/60 text-md md:text-lg py-1 select-none
-        '
-      >
-        {props.productCount} products
-      </span>
+      <div className="flex-1 flex justify-end items-center">
+        <span className="inline-flex items-center gap-1 text-text/70 text-sm md:text-base select-none">
+          <PiListHeartLight className="w-5 h-5 text-primary/60" />
+          {props.productCount} produtos
+        </span>
+      </div>
       {isOpen && (
         <div
           className={OVERLAY_CLASS}

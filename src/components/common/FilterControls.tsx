@@ -142,7 +142,6 @@ const FilterControls: React.FC<FilterControlsProps & { hideSearchOnMobileTablet?
   return (
     <>
       <div className='block lg:hidden relative h-full overflow-auto min-w-0 p-5 md:p-8'>
-        {/* Fixed header for mobile/tablet */}
         {onClose && (
           <button
             className='fixed top-2 right-2 text-gray-400 hover:text-primary text-2xl font-bold bg-transparent border-none outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors duration-150 z-30'
@@ -153,7 +152,6 @@ const FilterControls: React.FC<FilterControlsProps & { hideSearchOnMobileTablet?
             &times;
           </button>
         )}
-        {/* Removido badge de filtros ativos */}
         <div className='flex flex-col gap-8 max-w-2xl mx-auto'>
           {!hideSearchOnMobileTablet && (
             <FilterField label='Search:' id='search-mobile'>

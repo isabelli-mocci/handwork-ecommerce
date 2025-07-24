@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import type { ProductCardProps } from '../../types/productCard.types';
-
 import {
   CARD_CLASS,
   IMAGE_WRAPPER_CLASS,
@@ -12,7 +11,6 @@ import {
   PRICE_CLASS,
   LINK_CLASS
 } from '../../styles/productCard.styles';
-
 
 const ProductImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
   <img src={src} alt={alt} className={IMAGE_CLASS} loading="lazy" />

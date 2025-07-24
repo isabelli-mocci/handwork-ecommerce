@@ -17,7 +17,6 @@ const Footer: React.FC = () => {
           </Link>
           <span className='text-xs text-text/60 mt-1'>Handmade with love</span>
         </div>
-
         
         <nav className='flex-1 flex flex-col items-center'>
           <ul className='flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm lg:text-base font-medium'>
@@ -58,8 +57,7 @@ const Footer: React.FC = () => {
             </li>
           </ul>
         </nav>
-
-        
+  
         <div className='flex flex-col items-center md:items-end gap-2'>
           <div className='flex gap-4'>
             <a

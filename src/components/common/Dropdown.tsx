@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import DROPDOWN_CLASSES from '../../styles/dropdown.styles';
 import type { DropdownProps } from '../../types/dropdown.types';
 import { getDisplayLabel } from '../../utils/productFilters.utils';

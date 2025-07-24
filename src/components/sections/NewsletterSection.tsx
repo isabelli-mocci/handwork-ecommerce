@@ -19,11 +19,11 @@ const NewsletterSection: React.FC = () => {
             type='email'
             placeholder='Your email address'
             aria-label='Your email address for the newsletter'
-            className='w-full p-3 md:p-4 pr-10 md:pr-12 border border-primary/50 rounded-sm bg-background placeholder-text/70 focus:outline-none focus:border-primary transition-colors text-left' // Aumentado pr-10/md:pr-12 para dar espaço ao ícone
+            className='w-full p-3 md:p-4 pr-10 md:pr-12 border border-primary/50 rounded-sm bg-background placeholder-text/70 focus:outline-none focus:border-primary transition-colors text-left'
           />
           <button
             type='submit'
-            className='absolute right-0 top-1/2 -translate-y-1/2 p-2 focus:outline-none text-text hover:text-primary transition-colors' // Posiciona o botão de seta
+            className='absolute right-0 top-1/2 -translate-y-1/2 p-2 focus:outline-none text-text hover:text-primary transition-colors'
             aria-label='Subscribe'
           >
             <GoChevronRight className='w-6 h-6' />

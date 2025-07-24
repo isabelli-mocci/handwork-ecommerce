@@ -83,8 +83,6 @@ const ProductsPage: React.FC = () => {
           />
         </div>
 
-        {/* SidebarFilter para tablet removido para evitar duplicidade de botão/modal */}
-
         <ProductList products={filteredProducts} />
       </div>
     </div>
