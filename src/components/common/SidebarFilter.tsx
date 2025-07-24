@@ -40,7 +40,7 @@ function SidebarFilter(props: SidebarFilterProps) {
       <div className="flex-1 flex justify-end items-center">
         <span className="inline-flex items-center gap-1 text-text/70 text-sm md:text-base select-none">
           <PiListHeartLight className="w-5 h-5 text-primary/60" />
-          {props.productCount} produtos
+          {props.productCount} results
         </span>
       </div>
       {isOpen && (
