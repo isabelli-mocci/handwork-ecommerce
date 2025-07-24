@@ -30,7 +30,7 @@ const ProductsPage: React.FC = () => {
   return (
     <div className='py-8'>
       <div className='container mx-auto px-4'>
-        <h1 className='font-cardo text-2xl md:text-3xl lg:text-4xl font-bold text-center text-primary m-6 lg:m-10 uppercase'>
+        <h1 className='font-cardo text-2xl md:text-3xl lg:text-4xl font-black text-center text-primary m-6 lg:m-10 uppercase'>
           Our Collection
         </h1>
         <p className='lg:max-w-5xl mx-auto mb-10 text-xs md:text-sm lg:text-lg text-center text-text/80 leading-relaxed'>
