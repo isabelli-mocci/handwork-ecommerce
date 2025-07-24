@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import DROPDOWN_CLASSES from '../../styles/dropdown.styles';
 import type { DropdownProps } from '../../types/dropdown.types';
 import { getDisplayLabel } from '../../utils/productFilters.utils';
-
 import type { DropdownOption } from '../../types/dropdown.types';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 const DropdownButton: React.FC<{
   isOpen: boolean;
@@ -76,17 +76,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, onVa
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen, handleClickOutside]);
+  useClickOutside(dropdownRef, () => setIsOpen(false), isOpen);
 
   const selectedOption = useMemo(
     () => options.find(option => option.value === selectedValue),
