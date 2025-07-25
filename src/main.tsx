@@ -11,6 +11,7 @@ import AboutUsPage from './pages/AboutUsPage.tsx';
 import ContactUsPage from './pages/ContactUsPage.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
+import ShippingReturnsPage from './pages/ShippingReturnsPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/shipping-returns" element={<ShippingReturnsPage />} />
         </Routes>
       </App>
     </BrowserRouter>
