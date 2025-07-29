@@ -64,14 +64,14 @@ export function filterProducts(
   const sliderValue = Number(selectedPriceRangeLabel);
   let matchesPriceFn: (product: Product) => boolean;
   if (!isNaN(sliderValue) && sliderValue > 0) {
-    matchesPriceFn = (product: Product) => product.priceValue >= sliderValue;
+    matchesPriceFn = (product: Product) => product.price >= sliderValue;
   } else {
     const selectedRange =
       priceRanges.find(range => range.label === selectedPriceRangeLabel) ||
       defaultPriceRange;
     matchesPriceFn = (product: Product) =>
-      product.priceValue >= selectedRange.min &&
-      product.priceValue <= selectedRange.max;
+      product.price >= selectedRange.min &&
+      product.price <= selectedRange.max;
   }
 
   return products.filter(product => {
@@ -101,9 +101,9 @@ export function sortProducts(products: Product[], sortBy: string): Product[] {
 
   switch (sortBy) {
     case 'price-asc':
-      return sortedProducts.sort((a, b) => a.priceValue - b.priceValue);
+      return sortedProducts.sort((a, b) => a.price - b.price);
     case 'price-desc':
-      return sortedProducts.sort((a, b) => b.priceValue - a.priceValue);
+      return sortedProducts.sort((a, b) => b.price - a.price);
     case 'name-asc':
       return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
     case 'name-desc':
