@@ -16,11 +16,11 @@ const ProductImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
   <img src={src} alt={alt} className={IMAGE_CLASS} loading="lazy" />
 );
 
-const ProductContent: React.FC<{ name: string; price: string; link: string; actionLabel: string }> = ({ name, price, link, actionLabel }) => (
+const ProductContent: React.FC<{ name: string; price: number; currency: string; link: string; actionLabel: string }> = ({ name, price, currency, link, actionLabel }) => (
   <div className={CONTENT_CLASS}>
     <div>
       <h3 className={TITLE_CLASS}>{name}</h3>
-      <p className={PRICE_CLASS}>{price}</p>
+      <p className={PRICE_CLASS}>{currency} {Number(price).toFixed(2)}</p>
     </div>
     <Link to={link} className={LINK_CLASS}>
       {actionLabel}
@@ -31,7 +31,7 @@ const ProductContent: React.FC<{ name: string; price: string; link: string; acti
 const ProductCard: React.FC<ProductCardProps> = ({ product, onFavoriteClick, isFavorite = false, actionLabel = 'Choose Options' }) => (
   <article className={CARD_CLASS}>
     <div className={IMAGE_WRAPPER_CLASS}>
-      <ProductImage src={product.image} alt={product.name} />
+      <ProductImage src={product.images[0]} alt={product.name} />
       <FavoriteButton
         isFavorite={isFavorite}
         onClick={onFavoriteClick ? () => onFavoriteClick(String(product.id)) : undefined}
@@ -41,7 +41,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onFavoriteClick, isF
     <ProductContent
       name={product.name}
       price={product.price}
-      link={product.link}
+      currency={product.currency}
+      link={product.link || `/products/${product.id}`}
       actionLabel={actionLabel}
     />
   </article>
