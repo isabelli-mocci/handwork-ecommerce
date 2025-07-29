@@ -46,7 +46,7 @@ const NewsletterSection: React.FC = () => {
             <span className='block mt-2 text-xs text-red-500'>{error}</span>
           )}
           {submitted && (
-            <span className='block mt-2 text-xs text-green-600'>Inscrição realizada com sucesso!</span>
+            <span className='block mt-2 text-xs text-green-600'>Registration successful!</span>
           )}
         </form>
       </div>

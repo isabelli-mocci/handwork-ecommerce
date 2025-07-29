@@ -13,7 +13,7 @@ export function useNewsletterForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setError('Por favor, insira um e-mail válido.');
+      setError('Please enter a valid email address.');
       return;
     }
     setSubmitted(true);
