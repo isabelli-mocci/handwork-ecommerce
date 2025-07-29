@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductList from '../components/common/ProductList';
-import { products, priceRanges, sortOptions } from '../data/products.data';
+import { products } from '../data/productsDetails.data';
+import { priceRanges, sortOptions } from '../data/products.data';
 import { getUniqueValues } from '../utils/productFilters.utils';
 import { useProductFilters } from '../hooks/useProductFilters';
 import { useFavorites } from '../hooks/useFavoritesHooks';
