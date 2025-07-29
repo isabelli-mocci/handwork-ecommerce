@@ -15,7 +15,10 @@ const Footer: React.FC = () => {
       </div>
       <div className='container mx-auto max-w-5xl mt-6 border-t border-primary/10 pt-3 md:pt-2 lg:pt-3 text-center'>
         <p className='text-xs font-normal lg:text-sm text-text/60'>
-          &copy; {currentYear} Isabelli Mocci | Mocci & Co. | All rights reserved.
+          &copy; {currentYear} Mocci & Co. | All rights reserved.<br />
+          <span className="block mt-1">
+            Website credit: <a href="https://www.linkedin.com/in/isabelli-mocci/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Isabelli Mocci</a>
+          </span>
         </p>
       </div>
     </footer>
