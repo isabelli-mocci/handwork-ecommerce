@@ -28,7 +28,7 @@ const SquareImage: React.FC<SquareImageProps> = ({ src, alt }) => (
 
 const AboutUsPage: React.FC = () => (
   <article className='' aria-label='Our Story'>
-    <div className='container mx-auto px-4 max-w-4xl flex flex-col'>
+    <div className='pt-8 container mx-auto px-4 max-w-4xl flex flex-col'>
       <h1 className={TITLE_CLASS}>{ABOUT_CONTENT.title}</h1>
       <p className={INTRO_TEXT_CLASS}>{ABOUT_CONTENT.intro}</p>
     </div>
