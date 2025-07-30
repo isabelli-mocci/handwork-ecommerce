@@ -12,4 +12,5 @@ export interface Product {
   rating: number;
   color?: string;
   link?: string;
+  discountPrice?: number;
 }
