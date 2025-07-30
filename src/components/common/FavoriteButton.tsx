@@ -6,21 +6,18 @@ import '../../styles/pop-animation.css';
 interface FavoriteButtonProps {
   isFavorite?: boolean;
   onClick?: () => void;
-  label: string;
+  label?: string;
 }
 
-const FAVORITE_BTN_CLASS = 'absolute top-0 right-0 p-2 group/heart';
-const HEART_ICON_CLASS =
-  'w-5 h-5 transition-transform duration-200 group-hover/heart:text-primary text-text';
+const FAVORITE_BTN_CLASS = 'px-3 py-3 border border-brown-800 transition-colors flex items-center justify-center bg-white relative hover:-translate-y-0.5 hover:scale-102 duration-200';
+const HEART_ICON_CLASS = 'text-2xl transition-transform duration-300';
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({
-  isFavorite = false,
-  onClick,
-  label,
-}) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ isFavorite = false, onClick, label }) => {
   const [heartRef, triggerPop] = usePopAnimation();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.classList.add('animate-ping-heart');
+    setTimeout(() => e.currentTarget.classList.remove('animate-ping-heart'), 400);
     if (onClick) onClick();
     triggerPop();
   };
@@ -29,20 +26,19 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     <button
       type='button'
       className={FAVORITE_BTN_CLASS}
-      aria-label={label}
+      aria-label={label || (isFavorite ? 'Remove from Favorites' : 'Add to Favorites')}
       aria-pressed={isFavorite}
       onClick={handleClick}
+      style={{ overflow: 'visible' }}
     >
-      <span
-        ref={heartRef}
-        className='inline-block'
-      >
+      <span ref={heartRef} className='inline-block'>
         {isFavorite ? (
-          <HiHeart className={HEART_ICON_CLASS + ' text-primary'} />
+          <HiHeart className={HEART_ICON_CLASS + ' text-red-500'} />
         ) : (
-          <HiOutlineHeart className={HEART_ICON_CLASS} />
+          <HiOutlineHeart className={HEART_ICON_CLASS + ' text-gray-600'} />
         )}
       </span>
+      <span className='sr-only'>{label || (isFavorite ? 'Remove from Favorites' : 'Add to Favorites')}</span>
     </button>
   );
 };
