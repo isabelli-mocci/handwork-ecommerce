@@ -37,20 +37,77 @@ const FormInput: React.FC<InputProps> = memo(
 
 const CheckoutForm: React.FC<CheckoutFormProps> = memo(
   ({ data, onChange, onNext, loading }) => {
+    const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
+
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         onChange(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: '' }));
       },
       [onChange]
     );
 
+    const handleBackToCart = useCallback(() => {
+      window.location.href = '/cart';
+    }, []);
+
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
         e.preventDefault();
-        onNext();
+        const newErrors: { [key: string]: string } = {};
+        if (!data.firstName.trim())
+          newErrors.firstName = 'First name is required.';
+        // First name
+        else if (data.firstName.trim().length < 2)
+          newErrors.firstName = 'First name must be at least 2 characters.';
+        else if (data.firstName.trim().length > 50)
+          newErrors.firstName = 'First name must be less than 50 characters.';
+
+        // Last name
+        if (!data.lastName.trim())
+          newErrors.lastName = 'Last name is required.';
+        else if (data.lastName.trim().length < 2)
+          newErrors.lastName = 'Last name must be at least 2 characters.';
+        else if (data.lastName.trim().length > 50)
+          newErrors.lastName = 'Last name must be less than 50 characters.';
+
+        // Email
+        if (!data.email.trim()) newErrors.email = 'Email is required.';
+        else if (!/^\S+@\S+\.\S+$/.test(data.email))
+          newErrors.email = 'Invalid email.';
+        if (!data.phone?.trim()) newErrors.phone = 'Phone number is required.';
+        else if (!/^\d{8,15}$/.test(data.phone.replace(/\D/g, '')))
+          newErrors.phone = 'Phone number must be 8-15 digits.';
+
+        // Country
+        if (!data.country.trim()) newErrors.country = 'Country is required.';
+        else if (data.country.trim().length < 2)
+          newErrors.country = 'Country must be at least 2 characters.';
+
+        // City
+        if (!data.city.trim()) newErrors.city = 'City is required.';
+        else if (data.city.trim().length < 2)
+          newErrors.city = 'City must be at least 2 characters.';
+
+        // Postal code
+        if (!data.zipCode.trim())
+          newErrors.zipCode = 'Postal code is required.';
+        else if (!/^\d{5,10}$/.test(data.zipCode.replace(/\D/g, '')))
+          newErrors.zipCode = 'Postal code must be 5-10 digits.';
+
+        // Address
+        if (!data.address.trim()) newErrors.address = 'Address is required.';
+        else if (data.address.trim().length < 5)
+          newErrors.address = 'Address must be at least 5 characters.';
+        else if (/^\d+$/.test(data.address.trim()))
+          newErrors.address = 'Address cannot be only numbers.';
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+          onNext();
+        }
       },
-      [onNext]
+      [onNext, data]
     );
 
     return (
@@ -79,6 +136,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='First Name'
                 required
               />
+              {errors.firstName && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.firstName}
+                </span>
+              )}
             </div>
             <div className='flex flex-col'>
               <FormInput
@@ -90,6 +152,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Last Name'
                 required
               />
+              {errors.lastName && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.lastName}
+                </span>
+              )}
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
@@ -103,6 +170,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Email'
                 required
               />
+              {errors.email && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.email}
+                </span>
+              )}
             </div>
             <div className='flex flex-col'>
               <FormInput
@@ -114,6 +186,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Phone Number'
                 required
               />
+              {errors.phone && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.phone}
+                </span>
+              )}
             </div>
           </div>
           <div className='flex flex-col'>
@@ -132,6 +209,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Country'
                 required
               />
+              {errors.country && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.country}
+                </span>
+              )}
             </div>
             <div className='flex flex-col'>
               <FormInput
@@ -143,6 +225,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='City'
                 required
               />
+              {errors.city && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.city}
+                </span>
+              )}
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-4'>
@@ -156,6 +243,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Postal Code'
                 required
               />
+              {errors.zipCode && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.zipCode}
+                </span>
+              )}
             </div>
             <div className='flex flex-col'>
               <FormInput
@@ -167,6 +259,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
                 placeholder='Address'
                 required
               />
+              {errors.address && (
+                <span className='text-xs text-red-600/65 mt-1'>
+                  {errors.address}
+                </span>
+              )}
             </div>
           </div>
 
@@ -212,6 +309,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
             className='mt-4 block w-full text-left text-xs font-semibold uppercase underline cursor-pointer hover:text-primary/90 transition-colors'
             role='button'
             tabIndex={0}
+            onClick={handleBackToCart}
+            onKeyPress={e => {
+              if (e.key === 'Enter' || e.key === ' ') handleBackToCart();
+            }}
           >
             Back to Shopping Cart
           </span>
@@ -231,7 +332,15 @@ interface ShippingMethodRadioProps {
   required?: boolean;
 }
 
-const ShippingMethodRadio: React.FC<ShippingMethodRadioProps> = ({ label, value, checked, onChange, description, priceLabel, required }) => (
+const ShippingMethodRadio: React.FC<ShippingMethodRadioProps> = ({
+  label,
+  value,
+  checked,
+  onChange,
+  description,
+  priceLabel,
+  required,
+}) => (
   <label className='flex items-center gap-6'>
     <input
       type='radio'
@@ -248,8 +357,12 @@ const ShippingMethodRadio: React.FC<ShippingMethodRadioProps> = ({ label, value,
       required={required}
     />
     <span className='text-primary uppercase font-medium text-sm'>{label}</span>
-    <span className={`text-sm ${value === 'standard' ? 'mr-3' : 'mx-4'}`}>{description}</span>
-    <span className='text-primary uppercase font-medium ml-2 text-sm'>{priceLabel}</span>
+    <span className={`text-sm ${value === 'standard' ? 'mr-3' : 'mx-4'}`}>
+      {description}
+    </span>
+    <span className='text-primary uppercase font-medium ml-2 text-sm'>
+      {priceLabel}
+    </span>
   </label>
 );
 
