@@ -1,66 +1,39 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFavorites } from '../hooks/useFavoritesHooks';
 import useProductDetail from '../hooks/useProductDetail';
+import useSelectedImage from '../hooks/useSelectedImage';
+import { useProductDetailActions } from '../hooks/useProductDetailActions';
 import { useAddToCart } from '../hooks/useAddToCart';
 import getDetailIcon from '../utils/getDetailIcon.utils';
-import formatDescription from '../utils/formatDescription.utils';
 import ProductDetailsSection from '../components/sections/ProductDetailsSection';
+import ProductActions from '../components/ProductActions';
+import formatDescription from '../utils/formatDescription.utils';
 import ProductImages from '../components/common/ProductImages';
 import ProductMainImage from '../components/common/ProductMainImage';
-import QuantitySelector from '../components/common/QuantitySelector';
-import FavoriteButton from '../components/common/FavoriteButton';
 import RatingStars from '../components/common/RatingStars';
 import PriceDisplay from '../components/common/PriceDisplay';
 import ReviewsSection from '../components/sections/ReviewsSection';
 import RelatedProductsSection from '../components/sections/RelatedProductsSection';
-import ActionButton from '../components/common/ActionButton';
 
-const ProductDetailPage: React.FC = () => {
+function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const product = useProductDetail(id);
-  const [selectedImage, setSelectedImage] = useState('');
+  const product = useProductDetail(id) || undefined;
   const [quantity, setQuantity] = useState(1);
   const { isFavorite, toggleFavorite } = useFavorites();
   const addToCart = useAddToCart();
-
-  useEffect(() => {
-    if (product && product.images?.length) {
-      setSelectedImage(product.images[0]);
-    }
-  }, [product]);
-
+  const [selectedImage, setSelectedImage] = useSelectedImage(product?.images);
   const productIsFavorite = useMemo(() => (product ? isFavorite(product.id) : false), [product, isFavorite]);
-
-  const handleAddToCart = useCallback(() => {
-    if (!product) return;
-    addToCart(product, quantity);
-  }, [product, quantity, addToCart]);
-
-  const handleToggleFavorite = useCallback(() => {
-    if (!product) return;
-    toggleFavorite(product.id);
-    alert(`${product.name} ${productIsFavorite ? 'removed from' : 'added to'} favorites!`);
-  }, [product, toggleFavorite, productIsFavorite]);
-
-  const handleShare = useCallback(() => {
-    if (!product) return;
-    const desc = formatDescription(product.description);
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        text: desc,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  }, [product]);
+  const { handleAddToCart, handleToggleFavorite } = useProductDetailActions(
+    product,
+    quantity,
+    addToCart,
+    toggleFavorite
+  );
 
   if (!product) {
     return (
-      <div className='flex justify-center items-center min-h-[calc(100vh-150px)] text-xl text-text'>
+      <div className="flex justify-center items-center min-h-[calc(100vh-150px)] text-xl text-text">
         Loading product...
       </div>
     );
@@ -133,41 +106,27 @@ const ProductDetailPage: React.FC = () => {
           <div className="mb-3 md:mb-5 md:text-lg text-left">
             <PriceDisplay price={product.price} discountPrice={product.discountPrice} currency={product.currency} />
           </div>
-          <div className="flex items-end gap-2 mb-6 md:mb-8 justify-start">
-            <QuantitySelector quantity={quantity} setQuantity={setQuantity} stock={product.stock} />
-          </div>
-          <div className="flex items-center gap-2 mb-2">
-            <button
-              onClick={handleAddToCart}
-              className="flex-1 px-6 py-3 border border-brown-800 text-text transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white hover:bg-brown-50 hover:-translate-y-0.5 hover:scale-102 duration-200"
-              disabled={product.stock === 0}
-              type="button"
-            >
-              {product.stock > 0 ? 'Add to cart' : 'Out of Stock'}
-            </button>
-            <FavoriteButton
-              isFavorite={productIsFavorite}
-              onClick={handleToggleFavorite}
-              label={productIsFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            />
-          </div>
-          <ActionButton fullWidth className="mb-4">
-            Buy it now
-          </ActionButton>
+          <ProductActions
+            quantity={quantity}
+            setQuantity={setQuantity}
+            stock={product.stock}
+            isFavorite={productIsFavorite}
+            onAddToCart={handleAddToCart}
+            onToggleFavorite={handleToggleFavorite}
+          />
           <ProductDetailsSection
             description={product.description}
             details={product.details || []}
             getDetailIcon={getDetailIcon}
-            onShare={handleShare}
             formatDescription={formatDescription}
+            onShare={() => {}}
           />
-
           <ReviewsSection />
           <RelatedProductsSection />
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ProductDetailPage;
