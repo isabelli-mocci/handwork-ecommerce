@@ -1,5 +1,5 @@
 import type { ChangeEvent, FC } from 'react';
-import type { FormFields } from '../../data/contactPage.data';
+import type { FormFields } from '../../../data/contactPage.data';
 
 const INPUT_CLASS =
   "mt-1 block w-full px-4 py-3 bg-background border border-primary/50 rounded-sm shadow-sm placeholder-text/70 focus:outline-none focus:border-primary transition-colors";

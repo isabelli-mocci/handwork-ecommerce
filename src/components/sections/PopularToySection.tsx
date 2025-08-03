@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import ProductList from '../common/ProductList';
+import ProductList from '../common/product/ProductList';
 import type { Product } from '../../models/product.model';
 import catVioletImg from '../../assets/images/cat-violet.png';
 import sheepMargotImg from '../../assets/images/sheep-margot.png';
