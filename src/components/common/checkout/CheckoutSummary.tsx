@@ -8,6 +8,7 @@ interface CheckoutSummaryProps {
   shippingMethod: 'standard' | 'express';
   discount?: number;
   totalUnits: number;
+  discountForm?: React.ReactNode;
 }
 
 const formatCurrency = (value: number): string => `$${value.toFixed(2)}`;
@@ -46,7 +47,7 @@ function getTotal(subtotal: number, discount: number, shippingValue: number): nu
 }
 
 const CheckoutSummary: React.FC<CheckoutSummaryProps> = memo(
-  ({ items, subtotal, shippingMethod, discount = 0, totalUnits }) => {
+  ({ items, subtotal, shippingMethod, discount = 0, totalUnits, discountForm }) => {
     const shippingValue = getShippingValue(shippingMethod);
     const total = getTotal(subtotal, discount, shippingValue);
     return (
@@ -77,6 +78,9 @@ const CheckoutSummary: React.FC<CheckoutSummaryProps> = memo(
           <span>Total</span>
           <span>{formatCurrency(total)}</span>
         </div>
+        {discountForm && (
+          <div className="mb-2">{discountForm}</div>
+        )}
       </section>
     );
   }

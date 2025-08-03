@@ -47,15 +47,15 @@ const CheckoutPage: React.FC = () => {
             totalUnits={getTotalUnits(cartItems)}
             discount={discount.value}
             total={getTotal(subtotal, discount.value, shippingDetails.shippingMethod)}
+            discountForm={step === 'shipping' ? (
+              <DiscountForm
+                onApply={applyDiscount}
+                loading={isDiscountLoading}
+                status={discount.status}
+                message={discount.message}
+              />
+            ) : null}
           />
-          {step === 'shipping' && (
-            <DiscountForm
-              onApply={applyDiscount}
-              loading={isDiscountLoading}
-              status={discount.status}
-              message={discount.message}
-            />
-          )}
         </div>
 
         <div className="w-full">
