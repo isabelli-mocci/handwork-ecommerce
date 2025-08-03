@@ -1,374 +1,217 @@
-import React, { useCallback, memo } from 'react';
-import type { ShippingDetails } from '../../../hooks/useCheckoutState';
+import React, { memo, useCallback } from 'react';
 import { LiaSpinnerSolid } from 'react-icons/lia';
 import { useNavigate } from 'react-router-dom';
+import type { ShippingFormData } from '../../../types/shipping.types';
+import useFormValidation from '../../../hooks/useFormValidation';
+import FormField from './FormField';
+import ShippingMethod from './ShippingMethod';
+import { FormSection, FormRow, FormFieldWrapper } from './FormLayout';
+import { styles } from '../../../styles/checkout-form.styles';
 
 interface CheckoutFormProps {
-  data: ShippingDetails;
-  onChange: React.Dispatch<React.SetStateAction<ShippingDetails>>;
+  data: ShippingFormData;
+  onChange: React.Dispatch<React.SetStateAction<ShippingFormData>>;
   onNext: () => void;
   loading: boolean;
 }
 
-interface InputProps {
-  type: string;
-  id: string;
-  name: keyof ShippingDetails;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
-  required?: boolean;
-}
-
-const FormInput: React.FC<InputProps> = memo(
-  ({ type, id, name, value, onChange, placeholder, required = false }) => (
-    <input
-      type={type}
-      id={id}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className='w-full px-3 py-2 md:py-3 text-base border-b border-secondary bg-transparent focus:outline-none focus:border-primary transition-colors placeholder:text-text/70'
-      required={required}
-      autoComplete='off'
-    />
-  )
-);
-
 const CheckoutForm: React.FC<CheckoutFormProps> = memo(
   ({ data, onChange, onNext, loading }) => {
-    const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
     const navigate = useNavigate();
+    const { errors, validateForm, clearError } = useFormValidation(data);
 
-    const handleChange = useCallback(
+      const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        onChange(prev => ({ ...prev, [name]: value }));
-        setErrors(prev => ({ ...prev, [name]: '' }));
+        onChange(prevData => ({
+          ...prevData,
+          [name]: value
+        }));
+        clearError(name);
       },
-      [onChange]
-    );
-
-    const handleBackToCart = useCallback(() => {
+      [onChange, clearError]
+    );    const handleBackToCart = useCallback(() => {
       navigate('/cart');
     }, [navigate]);
 
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
         e.preventDefault();
-        const newErrors: { [key: string]: string } = {};
-        if (!data.firstName.trim())
-          newErrors.firstName = 'First name is required.';
-        // First name
-        else if (data.firstName.trim().length < 2)
-          newErrors.firstName = 'First name must be at least 2 characters.';
-        else if (data.firstName.trim().length > 50)
-          newErrors.firstName = 'First name must be less than 50 characters.';
-
-        // Last name
-        if (!data.lastName.trim())
-          newErrors.lastName = 'Last name is required.';
-        else if (data.lastName.trim().length < 2)
-          newErrors.lastName = 'Last name must be at least 2 characters.';
-        else if (data.lastName.trim().length > 50)
-          newErrors.lastName = 'Last name must be less than 50 characters.';
-
-        // Email
-        if (!data.email.trim()) newErrors.email = 'Email is required.';
-        else if (!/^\S+@\S+\.\S+$/.test(data.email))
-          newErrors.email = 'Invalid email.';
-        if (!data.phone?.trim()) newErrors.phone = 'Phone number is required.';
-        else if (!/^\d{8,15}$/.test(data.phone.replace(/\D/g, '')))
-          newErrors.phone = 'Phone number must be 8-15 digits.';
-
-        // Country
-        if (!data.country.trim()) newErrors.country = 'Country is required.';
-        else if (data.country.trim().length < 2)
-          newErrors.country = 'Country must be at least 2 characters.';
-
-        // City
-        if (!data.city.trim()) newErrors.city = 'City is required.';
-        else if (data.city.trim().length < 2)
-          newErrors.city = 'City must be at least 2 characters.';
-
-        // Postal code
-        if (!data.zipCode.trim())
-          newErrors.zipCode = 'Postal code is required.';
-        else if (!/^\d{5,10}$/.test(data.zipCode.replace(/\D/g, '')))
-          newErrors.zipCode = 'Postal code must be 5-10 digits.';
-
-        // Address
-        if (!data.address.trim()) newErrors.address = 'Address is required.';
-        else if (data.address.trim().length < 5)
-          newErrors.address = 'Address must be at least 5 characters.';
-        else if (/^\d+$/.test(data.address.trim()))
-          newErrors.address = 'Address cannot be only numbers.';
-        setErrors(newErrors);
-        if (Object.keys(newErrors).length === 0) {
+        if (validateForm()) {
           onNext();
         }
       },
-      [onNext, data]
+      [validateForm, onNext]
     );
 
     return (
-      <section
-        className='w-full'
-        aria-label='Checkout Form'
-      >
-        <header>
-          <h2 className='font-cardo font-bold text-primary text-md sm:text-xl my-4'>
-            Contact
-          </h2>
-        </header>
-        <form
-          onSubmit={handleSubmit}
-          className='space-y-6'
-          noValidate
-        >
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10'>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='firstName'
-                name='firstName'
-                value={data.firstName}
-                onChange={handleChange}
-                placeholder='First Name'
-                required
-              />
-              {errors.firstName && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.firstName}
-                </span>
-              )}
-            </div>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='lastName'
-                name='lastName'
-                value={data.lastName}
-                onChange={handleChange}
-                placeholder='Last Name'
-                required
-              />
-              {errors.lastName && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.lastName}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-            <div className='flex flex-col'>
-              <FormInput
-                type='email'
-                id='email'
-                name='email'
-                value={data.email}
-                onChange={handleChange}
-                placeholder='Email'
-                required
-              />
-              {errors.email && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.email}
-                </span>
-              )}
-            </div>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='phone'
-                name='phone'
-                value={data.phone || ''}
-                onChange={handleChange}
-                placeholder='Phone Number'
-                required
-              />
-              {errors.phone && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.phone}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='font-cardo font-bold text-primary text-md sm:text-xl my-4'>
-              Delivery
-            </h2>
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='country'
-                name='country'
-                value={data.country}
-                onChange={handleChange}
-                placeholder='Country'
-                required
-              />
-              {errors.country && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.country}
-                </span>
-              )}
-            </div>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='city'
-                name='city'
-                value={data.city}
-                onChange={handleChange}
-                placeholder='City'
-                required
-              />
-              {errors.city && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.city}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-4'>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='zipCode'
-                name='zipCode'
-                value={data.zipCode}
-                onChange={handleChange}
-                placeholder='Postal Code'
-                required
-              />
-              {errors.zipCode && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.zipCode}
-                </span>
-              )}
-            </div>
-            <div className='flex flex-col'>
-              <FormInput
-                type='text'
-                id='address'
-                name='address'
-                value={data.address}
-                onChange={handleChange}
-                placeholder='Address'
-                required
-              />
-              {errors.address && (
-                <span className='text-xs text-red-600/65 mt-1'>
-                  {errors.address}
-                </span>
-              )}
-            </div>
-          </div>
+      <section className={styles.container} aria-label='Checkout Form'>
+        <FormSection title="Contact">
+          <form onSubmit={handleSubmit} className={styles.form} noValidate>
+            <FormRow>
+              <FormFieldWrapper>
+                <FormField
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={data.firstName}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                  error={errors.firstName}
+                  required
+                />
+              </FormFieldWrapper>
+              <FormFieldWrapper>
+                <FormField
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={data.lastName}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  error={errors.lastName}
+                  required
+                />
+              </FormFieldWrapper>
+            </FormRow>
 
-          <div className='h-4' />
-          <div className='flex flex-col gap-2'>
-            <div className="shipping-method-radio">
-              <ShippingMethodRadio
-                label='STANDARD SHIPPING'
-                value='standard'
-                checked={data.shippingMethod === 'standard'}
-                onChange={onChange}
-                description='8-10 days'
-                priceLabel='FREE'
-                required
-              />
+            <FormRow>
+              <FormFieldWrapper>
+                <FormField
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  error={errors.email}
+                  required
+                />
+              </FormFieldWrapper>
+              <FormFieldWrapper>
+                <FormField
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  value={data.phone || ''}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                  error={errors.phone}
+                  required
+                />
+              </FormFieldWrapper>
+            </FormRow>
+
+            <FormSection title="Delivery">
+              <FormRow>
+                <FormFieldWrapper>
+                  <FormField
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={data.country}
+                    onChange={handleChange}
+                    placeholder="Country"
+                    error={errors.country}
+                    required
+                  />
+                </FormFieldWrapper>
+                <FormFieldWrapper>
+                  <FormField
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={data.city}
+                    onChange={handleChange}
+                    placeholder="City"
+                    error={errors.city}
+                    required
+                  />
+                </FormFieldWrapper>
+              </FormRow>
+
+              <FormRow>
+                <FormFieldWrapper>
+                  <FormField
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    value={data.zipCode}
+                    onChange={handleChange}
+                    placeholder="Postal Code"
+                    error={errors.zipCode}
+                    required
+                  />
+                </FormFieldWrapper>
+                <FormFieldWrapper>
+                  <FormField
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={data.address}
+                    onChange={handleChange}
+                    placeholder="Address"
+                    error={errors.address}
+                    required
+                  />
+                </FormFieldWrapper>
+              </FormRow>
+            </FormSection>
+
+            <div className={styles.shippingMethodsContainer}>
+              <div className="shipping-method-radio">
+                <ShippingMethod
+                  label="STANDARD SHIPPING"
+                  value="standard"
+                  checked={data.shippingMethod === 'standard'}
+                  onChange={onChange}
+                  description="8-10 days"
+                  priceLabel="FREE"
+                  required
+                />
+              </div>
+              <div className="shipping-method-radio">
+                <ShippingMethod
+                  label="EXPRESS SHIPPING"
+                  value="express"
+                  checked={data.shippingMethod === 'express'}
+                  onChange={onChange}
+                  description="2-3 days"
+                  priceLabel="$10.00"
+                />
+              </div>
             </div>
-            <div className="shipping-method-radio">
-              <ShippingMethodRadio
-                label='EXPRESS SHIPPING'
-                value='express'
-                checked={data.shippingMethod === 'express'}
-                onChange={onChange}
-                description='2-3 days'
-                priceLabel='$10.00'
-              />
+            <div className='h-2' />
+            <div className='flex flex-col items-start checkout-buttons px-4 md:px-0'>
+              <button
+                type='submit'
+                className={styles.submitButton(loading)}
+                disabled={loading}
+              >
+                {loading ? (
+                  <LiaSpinnerSolid className='animate-spin inline mr-2 text-lg' />
+                ) : (
+                  'Payment Method'
+                )}
+              </button>
             </div>
-          </div>
-          <div className='h-2' />
-          <div className='flex flex-col items-start checkout-buttons'>
-            <button
-              type='submit'
-              className={`w-full lg:w-[400px] px-6 py-3 border border-text text-xs font-semibold uppercase transition-colors duration-200 hover:bg-primary hover:text-white focus:bg-primary focus:text-white flex items-center justify-center ${
-                loading ? 'pointer-events-none opacity-60' : ''
-              }`}
-              disabled={loading}
+
+            <span
+              className={styles.backButton}
+              role='button'
+              tabIndex={0}
+              onClick={handleBackToCart}
+              onKeyPress={e => {
+                if (e.key === 'Enter' || e.key === ' ') handleBackToCart();
+              }}
             >
-              {loading ? (
-                <LiaSpinnerSolid className='animate-spin inline mr-2 text-lg' />
-              ) : (
-                'Payment Method'
-              )}
-            </button>
-          </div>
-
-          <span
-            className='mt-4 block w-full text-left text-xs font-semibold uppercase underline cursor-pointer hover:text-primary/90 transition-colors'
-            role='button'
-            tabIndex={0}
-            onClick={handleBackToCart}
-            onKeyPress={e => {
-              if (e.key === 'Enter' || e.key === ' ') handleBackToCart();
-            }}
-          >
-            Back to Shopping Cart
-          </span>
-        </form>
+              Back to Shopping Cart
+            </span>
+          </form>
+        </FormSection>
       </section>
     );
   }
-);
-
-interface ShippingMethodRadioProps {
-  label: string;
-  value: 'standard' | 'express';
-  checked: boolean;
-  onChange: React.Dispatch<React.SetStateAction<ShippingDetails>>;
-  description: string;
-  priceLabel: string;
-  required?: boolean;
-}
-
-const ShippingMethodRadio: React.FC<ShippingMethodRadioProps> = ({
-  label,
-  value,
-  checked,
-  onChange,
-  description,
-  priceLabel,
-  required,
-}) => (
-  <label className='flex items-center gap-6'>
-    <input
-      type='radio'
-      name='shippingMethod'
-      value={value}
-      checked={checked}
-      onChange={e =>
-        onChange(prev => ({
-          ...prev,
-          shippingMethod: e.target.value as 'standard' | 'express',
-        }))
-      }
-      className='accent-primary'
-      required={required}
-    />
-    <span className='text-primary uppercase font-medium text-sm'>{label}</span>
-    <span className={`text-sm ${value === 'standard' ? 'mr-3' : 'mx-4'}`}>
-      {description}
-    </span>
-    <span className='text-primary uppercase font-medium ml-2 text-sm'>
-      {priceLabel}
-    </span>
-  </label>
 );
 
 export default CheckoutForm;
