@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import ProductList from '../common/ProductList';
 import type { Product } from '../../models/product.model';
 import catVioletImg from '../../assets/images/cat-violet.png';
@@ -7,7 +8,7 @@ import bunnyFleurDeLisImg from '../../assets/images/bunny-fleur-de-lis.png';
 import cowDaisyImg from '../../assets/images/cow-daisy.png';
 import { useFavorites } from '../../hooks/useFavoritesHooks';
 
-const popularToys: Product[] = [
+const POPULAR_TOYS: Product[] = [
   {
     id: '5',
     name: 'Cat Violet',
@@ -16,7 +17,7 @@ const popularToys: Product[] = [
     images: [catVioletImg],
     description: [
       'Pink fairycore cat with a violet ribbon.',
-      'A magical friend for imaginative play.'
+      'A magical friend for imaginative play.',
     ],
     details: [
       { label: 'Material', value: 'Organic Cotton' },
@@ -38,7 +39,7 @@ const popularToys: Product[] = [
     images: [sheepMargotImg],
     description: [
       'White sheep plush with soft wool and farmcore style.',
-      'Gentle and calming for little ones.'
+      'Gentle and calming for little ones.',
     ],
     details: [
       { label: 'Material', value: 'Organic Cotton' },
@@ -60,7 +61,7 @@ const popularToys: Product[] = [
     images: [bunnyFleurDeLisImg],
     description: [
       'Beige bunny with a fleur de lis motif, cottagecore charm.',
-      'Soft and huggable for bedtime.'
+      'Soft and huggable for bedtime.',
     ],
     details: [
       { label: 'Material', value: 'Organic Cotton' },
@@ -82,7 +83,7 @@ const popularToys: Product[] = [
     images: [cowDaisyImg],
     description: [
       'Black and white cow plush with daisy embroidery.',
-      'A farmcore favorite for all ages.'
+      'A farmcore favorite for all ages.',
     ],
     details: [
       { label: 'Material', value: 'Organic Cotton' },
@@ -100,23 +101,40 @@ const popularToys: Product[] = [
 
 const PopularToysSection: React.FC = () => {
   const { toggleFavorite, isFavorite } = useFavorites();
+
+  const handleFavoriteClick = (id: string) => {
+    toggleFavorite(id);
+  };
+
+  const checkIsFavorite = (product: Product) => isFavorite(String(product.id));
+
   return (
-    <section
+    <motion.section
       id='popular-toys-section'
       className='py-8'
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div className='container mx-auto px-4'>
-        <h2 className='font-cardo text-2xl font-black text-left mb-8 uppercase'>
+        <motion.h2
+          className='font-cardo text-2xl font-black text-left mb-8 uppercase'
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+        >
           Popular Toys
-        </h2>
+        </motion.h2>
         <ProductList
-          products={popularToys}
-          onFavoriteClick={toggleFavorite}
-          isFavorite={product => isFavorite(String(product.id))}
+          products={POPULAR_TOYS}
+          onFavoriteClick={handleFavoriteClick}
+          isFavorite={checkIsFavorite}
           className='grid-cols-2 lg:grid-cols-4 gap-4'
         />
       </div>
-    </section>
+    </motion.section>
   );
 };
 
