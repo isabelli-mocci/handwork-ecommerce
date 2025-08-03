@@ -1,4 +1,5 @@
 import React from 'react';
+import { LiaSpinnerSolid } from 'react-icons/lia';
 
 export type OrderSummaryProps = {
   subtotal: number;
@@ -32,7 +33,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal, total, loadingChe
         className={`mt-3 w-full px-6 py-3 border border-text text-text text-xs font-semibold uppercase transition-colors duration-200 hover:bg-primary hover:text-white focus:bg-primary focus:text-white ${loadingCheckout ? 'pointer-events-none opacity-60' : ''}`}
         disabled={loadingCheckout}
       >
-        {loadingCheckout ? <span className="animate-spin inline mr-2">⏳</span> : null}
+        {loadingCheckout ? (
+          <LiaSpinnerSolid className="animate-spin inline mr-2 text-lg" />
+        ) : null}
         Checkout Now
       </button>
       <span
