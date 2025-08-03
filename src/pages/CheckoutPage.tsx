@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCheckoutState } from '../hooks/useCheckoutState';
 import CheckoutSummary from '../components/common/checkout/CheckoutSummary.tsx';
+import type { ShippingFormData } from '../types/shipping.types';
 import DiscountForm from '../components/common/form/DiscountForm.tsx';
 import { useDiscount } from '../hooks/useDiscount';
 import CheckoutForm from '../components/common/form/CheckoutForm.tsx';
@@ -12,9 +13,6 @@ const getShippingMethod = (method: string) => (method === 'express' ? 'express' 
 
 const getTotalUnits = (items: Array<{ quantity: number }>) =>
   items.reduce((sum, item) => sum + item.quantity, 0);
-
-const getTotal = (subtotal: number, discount: number, shippingMethod: string) =>
-  subtotal - discount + (shippingMethod === 'express' ? 10 : 0);
 
 const CheckoutPage: React.FC = () => {
   const { cartItems } = useCart();
@@ -36,8 +34,8 @@ const CheckoutPage: React.FC = () => {
   const { discount, isLoading: isDiscountLoading, applyDiscount } = useDiscount(subtotal);
 
   return (
-    <div className="container mx-auto px-6 md:px-32 lg:px-4 pt-16 pb-2 max-w-full lg:max-w-[98vw] min-h-[80vh] flex flex-col">
-      <div className="flex flex-col lg:flex-row-reverse gap-0 lg:gap-16 flex-1 justify-center">
+    <div className="w-full min-h-[80vh] flex flex-col items-center">
+      <div className="flex flex-col lg:flex-row-reverse gap-0 lg:gap-16 flex-1 justify-center w-full max-w-[1920px] px-0 md:px-4 lg:px-8">
         <div className="w-full lg:w-[550px] p-4 lg:p-4 mb-0">
           <CheckoutSummary
             items={cartItems}
@@ -45,7 +43,6 @@ const CheckoutPage: React.FC = () => {
             shippingMethod={getShippingMethod(shippingDetails.shippingMethod)}
             totalUnits={getTotalUnits(cartItems)}
             discount={discount.value}
-            total={getTotal(subtotal, discount.value, shippingDetails.shippingMethod)}
             discountForm={step === 'shipping' ? (
               <DiscountForm
                 onApply={applyDiscount}
@@ -57,11 +54,11 @@ const CheckoutPage: React.FC = () => {
           />
         </div>
 
-        <div className="w-full lg:max-w-[1000px]">
+        <div className="w-full lg:max-w-[1000px] overflow-x-hidden">
           {step === 'shipping' && (
             <CheckoutForm
-              data={shippingDetails}
-              onChange={setShippingDetails}
+              data={{ ...shippingDetails, phone: shippingDetails.phone ?? '' }}
+              onChange={setShippingDetails as React.Dispatch<React.SetStateAction<ShippingFormData>>}
               onNext={goToNextStep}
               loading={isLoading}
             />
