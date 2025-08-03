@@ -16,6 +16,7 @@ import NotFoundPage from './pages/NotFoundPage.tsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
 import ShippingReturnsPage from './pages/ShippingReturnsPage.tsx';
 import FAQPage from './pages/FAQPage.tsx';
+import CheckoutPage from './pages/CheckoutPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -34,6 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path="/shipping-returns" element={<ShippingReturnsPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
         </App>
       </BrowserRouter>
