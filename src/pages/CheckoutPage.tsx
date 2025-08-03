@@ -8,6 +8,14 @@ import PaymentForm from '../components/common/form/PaymentForm.tsx';
 import CheckoutConfirmationModal from '../components/common/checkout/CheckoutConfirmationModal.tsx';
 import { useCart } from '../hooks/useCart';
 
+const getShippingMethod = (method: string) => (method === 'express' ? 'express' : 'standard');
+
+const getTotalUnits = (items: Array<{ quantity: number }>) =>
+  items.reduce((sum, item) => sum + item.quantity, 0);
+
+const getTotal = (subtotal: number, discount: number, shippingMethod: string) =>
+  subtotal - discount + (shippingMethod === 'express' ? 10 : 0);
+
 const CheckoutPage: React.FC = () => {
   const { cartItems } = useCart();
   const {
@@ -35,10 +43,10 @@ const CheckoutPage: React.FC = () => {
           <CheckoutSummary
             items={cartItems}
             subtotal={subtotal}
-            shippingMethod={shippingDetails.shippingMethod === 'express' ? 'express' : 'standard'}
-            totalUnits={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+            shippingMethod={getShippingMethod(shippingDetails.shippingMethod)}
+            totalUnits={getTotalUnits(cartItems)}
             discount={discount.value}
-            total={subtotal - discount.value + (shippingDetails.shippingMethod === 'express' ? 10 : 0)}
+            total={getTotal(subtotal, discount.value, shippingDetails.shippingMethod)}
           />
           <DiscountForm
             onApply={applyDiscount}
