@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { CONTACT } from '../data/contactPage.data';
 import { useContactForm } from '../hooks/useContactForm';
-import { TextInput, TextArea } from '../components/common/ContactFormFields';
+import { TextInput, TextArea } from '../components/common/form/ContactFormFields';
 
 const ContactUsPage: FC = () => {
   const { form, error, success, handleChange, handleSubmit } = useContactForm();
