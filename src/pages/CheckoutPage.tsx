@@ -33,7 +33,7 @@ const CheckoutPage: React.FC = () => {
     finalizePurchase,
     closeConfirmationModal,
   } = useCheckoutState();
-  const { discount, loadingDiscount, applyDiscount } = useDiscount(subtotal);
+  const { discount, isLoading: isDiscountLoading, applyDiscount } = useDiscount(subtotal);
 
   return (
     <div className="container mx-auto px-6 md:px-32 pt-16 pb-2 max-w-[98vw] min-h-[80vh] flex flex-col justify-start">
@@ -50,7 +50,7 @@ const CheckoutPage: React.FC = () => {
           />
           <DiscountForm
             onApply={applyDiscount}
-            loading={loadingDiscount}
+            loading={isDiscountLoading}
             status={discount.status}
             message={discount.message}
           />
