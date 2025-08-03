@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductList from '../components/common/ProductList';
+import ProductList from '../components/common/product/ProductList';
 import { products } from '../data/productsDetails.data';
 import { priceRanges, sortOptions } from '../data/products.data';
 import { getUniqueValues } from '../utils/productFilters.utils';
