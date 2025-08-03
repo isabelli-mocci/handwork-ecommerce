@@ -29,7 +29,7 @@ const FormInput: React.FC<InputProps> = memo(
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className='px-3 py-2 border-b border-secondary bg-transparent focus:outline-none focus:border-primary transition-colors placeholder:text-text/70'
+      className='w-full px-3 py-2 md:py-3 text-base border-b border-secondary bg-transparent focus:outline-none focus:border-primary transition-colors placeholder:text-text/70'
       required={required}
       autoComplete='off'
     />
@@ -118,16 +118,16 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
         aria-label='Checkout Form'
       >
         <header>
-          <h2 className='font-cardo text-2xl font-bold text-primary mb-6'>
+          <h2 className='font-cardo font-bold text-primary text-md sm:text-xl my-4'>
             Contact
           </h2>
         </header>
         <form
           onSubmit={handleSubmit}
-          className='space-y-4'
+          className='space-y-6'
           noValidate
         >
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10'>
             <div className='flex flex-col'>
               <FormInput
                 type='text'
@@ -196,7 +196,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
             </div>
           </div>
           <div className='flex flex-col'>
-            <h2 className='font-cardo text-2xl font-bold text-primary my-6'>
+            <h2 className='font-cardo font-bold text-primary text-md sm:text-xl my-4'>
               Delivery
             </h2>
           </div>
@@ -271,33 +271,36 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
 
           <div className='h-4' />
           <div className='flex flex-col gap-2'>
-            <ShippingMethodRadio
-              label='STANDARD SHIPPING'
-              value='standard'
-              checked={data.shippingMethod === 'standard'}
-              onChange={onChange}
-              description='8-10 days'
-              priceLabel='FREE'
-              required
-            />
-            <ShippingMethodRadio
-              label='EXPRESS SHIPPING'
-              value='express'
-              checked={data.shippingMethod === 'express'}
-              onChange={onChange}
-              description='2-3 days'
-              priceLabel='$10.00'
-            />
+            <div className="shipping-method-radio">
+              <ShippingMethodRadio
+                label='STANDARD SHIPPING'
+                value='standard'
+                checked={data.shippingMethod === 'standard'}
+                onChange={onChange}
+                description='8-10 days'
+                priceLabel='FREE'
+                required
+              />
+            </div>
+            <div className="shipping-method-radio">
+              <ShippingMethodRadio
+                label='EXPRESS SHIPPING'
+                value='express'
+                checked={data.shippingMethod === 'express'}
+                onChange={onChange}
+                description='2-3 days'
+                priceLabel='$10.00'
+              />
+            </div>
           </div>
           <div className='h-2' />
-          <div className='flex flex-col items-start'>
+          <div className='flex flex-col items-start checkout-buttons'>
             <button
               type='submit'
-              className={`px-6 py-3 border border-text text-xs font-semibold uppercase transition-colors duration-200 hover:bg-primary hover:text-white focus:bg-primary focus:text-white flex items-center justify-center ${
+              className={`w-full lg:w-[400px] px-6 py-3 border border-text text-xs font-semibold uppercase transition-colors duration-200 hover:bg-primary hover:text-white focus:bg-primary focus:text-white flex items-center justify-center ${
                 loading ? 'pointer-events-none opacity-60' : ''
               }`}
               disabled={loading}
-              style={{ minWidth: '400px', width: 'auto' }}
             >
               {loading ? (
                 <LiaSpinnerSolid className='animate-spin inline mr-2 text-lg' />
