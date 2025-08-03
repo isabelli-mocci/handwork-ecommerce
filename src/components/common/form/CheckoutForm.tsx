@@ -1,6 +1,7 @@
 import React, { useCallback, memo } from 'react';
 import type { ShippingDetails } from '../../../hooks/useCheckoutState';
 import { LiaSpinnerSolid } from 'react-icons/lia';
+import { useNavigate } from 'react-router-dom';
 
 interface CheckoutFormProps {
   data: ShippingDetails;
@@ -38,6 +39,7 @@ const FormInput: React.FC<InputProps> = memo(
 const CheckoutForm: React.FC<CheckoutFormProps> = memo(
   ({ data, onChange, onNext, loading }) => {
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
+    const navigate = useNavigate();
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +51,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = memo(
     );
 
     const handleBackToCart = useCallback(() => {
-      window.location.href = '/cart';
-    }, []);
+      navigate('/cart');
+    }, [navigate]);
 
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
