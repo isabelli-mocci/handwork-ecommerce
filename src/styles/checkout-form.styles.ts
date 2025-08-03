@@ -5,7 +5,7 @@ export const styles = {
   form: 'grid gap-6 w-full',
   gridContainer: 'grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 w-full',
   fieldContainer: 'flex flex-col w-full px-4 md:px-8 lg:px-0',
-  shippingMethodsContainer: 'flex flex-col gap-2 px-4 md:px-8 lg:px-0',
+  shippingMethodsContainer: 'flex flex-col gap-2 px-4 md:px-8 lg:px-0 mt-6',
   submitButton: (loading: boolean) => `
     w-full md:w-[660px] lg:w-[400px] 
     px-6 py-3 border border-text text-xs 
