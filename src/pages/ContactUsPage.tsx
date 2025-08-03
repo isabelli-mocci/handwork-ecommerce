@@ -55,10 +55,10 @@ const ContactUsPage: FC = () => {
             />
           </div>
           {error && (
-            <div className="text-red-600 text-sm font-medium">{error}</div>
+            <div className="text-red-600 text-xs italic">{error}</div>
           )}
           {success && (
-            <div className="text-green-600 text-sm font-medium">{success}</div>
+            <div className="text-green-600 text-xs italic">{success}</div>
           )}
           <div>
             <button
