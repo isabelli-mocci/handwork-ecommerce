@@ -9,7 +9,7 @@ const ContactUsPage: FC = () => {
   return (
     <main className="flex justify-center">
       <section className="p-6 sm:p-8 lg:p-10 max-w-2xl w-full">
-        <h1 className="font-cardo text-2xl md:text-3xl lg:text-4xl font-black mb-8 uppercase">{CONTACT.TITLE}</h1>
+        <h1 className="font-cardo text-2xl md:text-3xl lg:text-4xl font-black mb-8 mt-6 lg:m-10 text-primary text-center uppercase">{CONTACT.TITLE}</h1>
         <div className="mb-10">
           <h2 className="text-md sm:text-xl font-normal mb-4">{CONTACT.SUBTITLE}</h2>
           <p className="text-sm md:text-base lg:text-lg font-light mb-2 text-justify">{CONTACT.DESCRIPTION}</p>
