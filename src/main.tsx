@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './utils/ScrollToTop';
 import { CartProvider } from './context/CartProvider.tsx';
 import './index.css';
 
