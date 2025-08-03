@@ -9,7 +9,7 @@ export const FormSection: React.FC<FormSectionProps> = ({ title, children }) => 
   <>
     {title && (
       <div className='flex flex-col px-4 md:px-8 lg:px-0'>
-        <h2 className='font-cardo font-bold text-primary text-md sm:text-xl my-4'>
+        <h2 className='font-cardo font-bold text-primary text-xl my-4'>
           {title}
         </h2>
       </div>
