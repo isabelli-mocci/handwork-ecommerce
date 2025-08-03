@@ -43,8 +43,9 @@ const DropdownList: React.FC<{
   selectedValue: string;
   label: string;
   onSelect: (value: string) => void;
-}> = ({ options, selectedValue, label, onSelect }) => (
-  <ul className={DROPDOWN_CLASSES.list} role='listbox'>
+  className?: string;
+}> = ({ options, selectedValue, label, onSelect, className }) => (
+  <ul className={`${DROPDOWN_CLASSES.list} ${className || ''}`} role='listbox'>
     {options.map(option => {
       const isSelected = option.value === selectedValue;
       const isNotLast = options.length > 1 && option !== options[options.length - 1];
@@ -103,8 +104,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, onVa
     [onValueChange]
   );
 
+  const customWrapperClass = className?.includes('no-border')
+    ? `${className}`
+    : `${DROPDOWN_CLASSES.wrapper} ${className || ''} ${minWidthClass}`;
   return (
-    <div ref={dropdownRef} className={`${DROPDOWN_CLASSES.wrapper} ${className || ''} ${minWidthClass}`}>
+    <div ref={dropdownRef} className={customWrapperClass}>
       <DropdownButton
         isOpen={isOpen}
         onClick={() => setIsOpen(prev => !prev)}
@@ -117,6 +121,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, selectedValue, onVa
           selectedValue={selectedValue}
           label={label}
           onSelect={handleOptionSelect}
+          className={label === 'Quantity' && className?.includes('no-border') ? 'min-w-[48px]' : undefined}
         />
       )}
     </div>

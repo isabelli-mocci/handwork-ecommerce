@@ -1,4 +1,6 @@
 import React from 'react';
+import Dropdown from './Dropdown';
+import type { DropdownOption } from '../../types/dropdown.types';
 
 export type CartItemProps = {
   id: string;
@@ -13,7 +15,13 @@ export type CartItemProps = {
 
 const CartItem: React.FC<CartItemProps> = React.memo(({ id, name, image, price, quantity, onRemove, onQuantityChange, loading }) => {
   const handleRemove = React.useCallback(() => onRemove(id), [id, onRemove]);
-  const handleQuantity = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => onQuantityChange(id, parseInt(e.target.value)), [id, onQuantityChange]);
+  const handleQuantity = React.useCallback((value: string) => onQuantityChange(id, parseInt(value)), [id, onQuantityChange]);
+  const quantityOptions: DropdownOption[] = React.useMemo(() => (
+    Array.from({ length: 10 }, (_, i) => ({
+      value: String(i + 1),
+      label: String(i + 1)
+    }))
+  ), []);
   return (
     <div className="relative flex items-center gap-4 py-4 border-b border-secondary last:border-b-0 bg-transparent">
       <button
@@ -33,20 +41,14 @@ const CartItem: React.FC<CartItemProps> = React.memo(({ id, name, image, price, 
         <p className="text-text/70">${price.toFixed(2)}</p>
         <div className="flex items-center mt-2 gap-2">
           <span className="text-sm text-text font-normal">Quantity</span>
-          <div className="relative">
-            <select
-              value={quantity}
-              onChange={handleQuantity}
-              className="appearance-none w-16 pl-3 pr-6 py-1 text-center focus:outline-none focus:ring-0 cursor-pointer"
-              style={{ backgroundColor: 'transparent', color: 'inherit' }}
-              aria-label="Select quantity"
-              disabled={loading}
-            >
-              {Array.from({ length: 10 }, (_, i) => (
-                <option key={i + 1} value={i + 1}>{i + 1}</option>
-              ))}
-            </select>
-            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">▼</span>
+          <div className="relative min-w-[48px]">
+            <Dropdown
+              label="Quantity"
+              options={quantityOptions}
+              selectedValue={String(quantity)}
+              onValueChange={handleQuantity}
+              className="no-border px-0"
+            />
           </div>
         </div>
       </div>
