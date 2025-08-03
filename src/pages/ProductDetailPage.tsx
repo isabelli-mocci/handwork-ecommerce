@@ -7,12 +7,12 @@ import { useProductDetailActions } from '../hooks/useProductDetailActions';
 import { useAddToCart } from '../hooks/useAddToCart';
 import getDetailIcon from '../utils/getDetailIcon.utils';
 import ProductDetailsSection from '../components/sections/ProductDetailsSection';
-import ProductActions from '../components/ProductActions';
+import ProductActions from '../components/common/product/ProductActions';
 import formatDescription from '../utils/formatDescription.utils';
-import ProductImages from '../components/common/ProductImages';
-import ProductMainImage from '../components/common/ProductMainImage';
+import ProductImages from '../components/common/product/ProductImages';
+import ProductMainImage from '../components/common/product/ProductMainImage';
 import RatingStars from '../components/common/RatingStars';
-import PriceDisplay from '../components/common/PriceDisplay';
+import PriceDisplay from '../components/common/product/PriceDisplay';
 import ReviewsSection from '../components/sections/ReviewsSection';
 import RelatedProductsSection from '../components/sections/RelatedProductsSection';
 
