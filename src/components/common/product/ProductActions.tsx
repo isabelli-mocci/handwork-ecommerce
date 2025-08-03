@@ -1,8 +1,8 @@
 import React from 'react';
-import QuantitySelector from './common/QuantitySelector';
-import FavoriteButton from './common/FavoriteButton';
-import ActionButton from './common/ActionButton';
-import { useNotification } from '../context/useNotification';
+import QuantitySelector from './QuantitySelector';
+import FavoriteButton from '../FavoriteButton';
+import ActionButton from '../ActionButton';
+import { useNotification } from '../../../context/useNotification';
 
 export interface ProductActionsProps {
   quantity: number;
