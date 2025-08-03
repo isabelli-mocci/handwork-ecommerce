@@ -1,4 +1,5 @@
 import React from 'react';
+import { LiaSpinnerSolid } from 'react-icons/lia';
 import Dropdown from './Dropdown';
 import type { DropdownOption } from '../../types/dropdown.types';
 
@@ -30,7 +31,9 @@ const CartItem: React.FC<CartItemProps> = React.memo(({ id, name, image, price, 
         aria-label={`Remove ${name} from cart`}
         disabled={loading}
       >
-        {loading ? <span className="animate-spin inline mr-1">⏳</span> : null}
+        {loading ? (
+          <LiaSpinnerSolid className="animate-spin inline mr-1 text-lg" />
+        ) : null}
         Remove
       </button>
       <div className="flex-shrink-0 w-24 h-24 overflow-hidden rounded bg-secondary/50 flex items-center justify-center">
