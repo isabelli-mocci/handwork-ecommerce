@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
-import { validateDiscount } from '../utils/discountStrategies';
+import { validateDiscount } from '../utils/discountStrategies.utils';
 
 type DiscountStatus = 'idle' | 'success' | 'error';
 
