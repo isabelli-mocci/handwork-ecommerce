@@ -36,10 +36,9 @@ const CheckoutPage: React.FC = () => {
   const { discount, isLoading: isDiscountLoading, applyDiscount } = useDiscount(subtotal);
 
   return (
-    <div className="container mx-auto px-6 md:px-32 pt-16 pb-2 max-w-[98vw] min-h-[80vh] flex flex-col justify-start">
-      <h1 className="font-cardo text-2xl md:text-4xl font-bold text-primary text-center uppercase">Checkout</h1>
-      <div className="flex flex-col lg:flex-row-reverse gap-16 flex-1">
-        <div className="w-full lg:w-2/5">
+    <div className="container mx-auto px-6 md:px-32 lg:px-4 pt-16 pb-2 max-w-full lg:max-w-[98vw] min-h-[80vh] flex flex-col">
+      <div className="flex flex-col lg:flex-row-reverse gap-0 lg:gap-16 flex-1 justify-center">
+        <div className="w-full lg:w-[550px] p-4 lg:p-4 mb-0">
           <CheckoutSummary
             items={cartItems}
             subtotal={subtotal}
@@ -58,7 +57,7 @@ const CheckoutPage: React.FC = () => {
           />
         </div>
 
-        <div className="w-full">
+        <div className="w-full lg:max-w-[1000px]">
           {step === 'shipping' && (
             <CheckoutForm
               data={shippingDetails}
