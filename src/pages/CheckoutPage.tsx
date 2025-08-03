@@ -34,7 +34,7 @@ const CheckoutPage: React.FC = () => {
   const { discount, isLoading: isDiscountLoading, applyDiscount } = useDiscount(subtotal);
 
   return (
-    <div className="w-full min-h-[80vh] flex flex-col items-center">
+    <div className="w-full min-h-[80vh] flex flex-col items-center lg:mt-16">
       <div className="flex flex-col lg:flex-row-reverse gap-0 lg:gap-16 flex-1 justify-center w-full max-w-[1920px] px-0 md:px-4 lg:px-8">
         <div className="w-full lg:w-[550px] p-4 lg:p-4 mb-0">
           <CheckoutSummary
