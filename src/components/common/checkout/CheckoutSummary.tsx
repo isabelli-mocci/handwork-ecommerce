@@ -53,7 +53,7 @@ const CheckoutSummary: React.FC<CheckoutSummaryProps> = memo(
     return (
       <section className="p-6" aria-label="Order Summary">
         <header>
-          <h2 className="font-cardo text-2xl font-bold text-primary mb-4">Order Summary</h2>
+          <h2 className="font-cardo font-bold text-primary text-2xl mb-8">Order Summary</h2>
         </header>
         <div className="space-y-4 mb-4 border-b border-secondary pb-4">
           {items.map((item) => (
@@ -69,7 +69,7 @@ const CheckoutSummary: React.FC<CheckoutSummaryProps> = memo(
             <span>Shipping ({getShippingLabel(shippingMethod)})</span>
             <span>{shippingValue === 0 ? 'FREE' : formatCurrency(shippingValue)}</span>
           </div>
-          <div className="flex justify-between text-lime-800">
+          <div className="flex justify-between italic">
             <span>Discount</span>
             <span>-{formatCurrency(discount)}</span>
           </div>
