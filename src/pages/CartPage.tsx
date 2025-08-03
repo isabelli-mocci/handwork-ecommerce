@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import CartItem from '../components/common/CartItem';
 import OrderSummary from '../components/common/OrderSummary';
 import EmptyCart from '../components/common/EmptyCart';
-import DiscountForm from '../components/common/DiscountForm';
+import DiscountForm from '../components/common/form/DiscountForm';
 import { useCartPageState } from '../hooks/useCartPageState';
 
 const CartPage: React.FC = () => {
