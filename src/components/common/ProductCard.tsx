@@ -12,14 +12,34 @@ import {
   LINK_CLASS
 } from '../../styles/productCard.styles';
 
-const ProductImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
-  <img src={src} alt={alt} className={IMAGE_CLASS} loading="lazy" />
+
+interface ProductImageProps {
+  src: string;
+  alt: string;
+  link: string;
+}
+
+const ProductImage: React.FC<ProductImageProps> = ({ src, alt, link }) => (
+  <Link to={link}>
+    <img src={src} alt={alt} className={`${IMAGE_CLASS} cursor-pointer`} loading="lazy" />
+  </Link>
 );
 
-const ProductContent: React.FC<{ name: string; price: number; currency: string; link: string; actionLabel: string }> = ({ name, price, currency, link, actionLabel }) => (
+
+interface ProductContentProps {
+  name: string;
+  price: number;
+  currency: string;
+  link: string;
+  actionLabel: string;
+}
+
+const ProductContent: React.FC<ProductContentProps> = ({ name, price, currency, link, actionLabel }) => (
   <div className={CONTENT_CLASS}>
     <div>
-      <h3 className={TITLE_CLASS}>{name}</h3>
+      <Link to={link}>
+        <h3 className={`${TITLE_CLASS} cursor-pointer`}>{name}</h3>
+      </Link>
       <p className={PRICE_CLASS}>{currency} {Number(price).toFixed(2)}</p>
     </div>
     <Link to={link} className={LINK_CLASS}>
@@ -28,24 +48,29 @@ const ProductContent: React.FC<{ name: string; price: number; currency: string; 
   </div>
 );
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onFavoriteClick, isFavorite = false, actionLabel = 'Choose Options' }) => (
-  <article className={CARD_CLASS}>
-    <div className={IMAGE_WRAPPER_CLASS}>
-      <ProductImage src={product.images[0]} alt={product.name} />
-      <FavoriteButton
-        isFavorite={isFavorite}
-        onClick={onFavoriteClick ? () => onFavoriteClick(String(product.id)) : undefined}
-        label={`Favorite ${product.name}`}
+const ProductCard: React.FC<ProductCardProps> = ({ product, onFavoriteClick, isFavorite = false, actionLabel = 'Choose Options' }) => {
+  const productLink = product.link || `/products/${product.id}`;
+  const handleFavoriteClick = onFavoriteClick ? () => onFavoriteClick(String(product.id)) : undefined;
+
+  return (
+    <article className={CARD_CLASS}>
+      <div className={IMAGE_WRAPPER_CLASS}>
+        <ProductImage src={product.images[0]} alt={product.name} link={productLink} />
+        <FavoriteButton
+          isFavorite={isFavorite}
+          onClick={handleFavoriteClick}
+          label={`Favorite ${product.name}`}
+        />
+      </div>
+      <ProductContent
+        name={product.name}
+        price={product.price}
+        currency={product.currency}
+        link={productLink}
+        actionLabel={actionLabel}
       />
-    </div>
-    <ProductContent
-      name={product.name}
-      price={product.price}
-      currency={product.currency}
-      link={product.link || `/products/${product.id}`}
-      actionLabel={actionLabel}
-    />
-  </article>
-);
+    </article>
+  );
+};
 
 export default ProductCard;
