@@ -1,5 +1,5 @@
 import PRIVACY_POLICY from '../data/privacyPolicy.data';
-import { LazySection, Section } from '../components/common/PolicySection';
+import { LazySection, Section } from '../components/sections/PolicySection';
 
 const PrivacyPolicyPage = () => (
   <article
