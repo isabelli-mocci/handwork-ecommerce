@@ -1,12 +1,12 @@
 import React from 'react';
 import { useCheckoutState } from '../hooks/useCheckoutState';
-import CheckoutSummary from '../components/common/checkout/CheckoutSummary.tsx';
+import CheckoutSummary from '../components/features/checkout/CheckoutSummary.tsx';
 import type { ShippingFormData } from '../types/shipping.types';
 import DiscountForm from '../components/common/form/DiscountForm.tsx';
 import { useDiscount } from '../hooks/useDiscount';
-import CheckoutForm from '../components/common/form/CheckoutForm.tsx';
-import PaymentForm from '../components/common/form/PaymentForm.tsx';
-import CheckoutConfirmationModal from '../components/common/checkout/CheckoutConfirmationModal.tsx';
+import CheckoutForm from '../components/features/checkout/CheckoutForm.tsx';
+import PaymentForm from '../components/features/payment/PaymentForm.tsx';
+import CheckoutConfirmationModal from '../components/features/checkout/CheckoutConfirmationModal.tsx';
 import { useCart } from '../hooks/useCart';
 
 const getShippingMethod = (method: string) => (method === 'express' ? 'express' : 'standard');
@@ -71,6 +71,14 @@ const CheckoutPage: React.FC = () => {
               onFinalize={finalizePurchase}
               loading={isLoading}
               error={error}
+              totalAmount={subtotal}
+              shippingDetails={{
+                name: `${shippingDetails.firstName} ${shippingDetails.lastName}`,
+                address: shippingDetails.address,
+                city: shippingDetails.city,
+                zip: shippingDetails.zipCode,
+                phone: shippingDetails.phone ?? ''
+              }}
             />
           )}
         </div>

@@ -1,9 +1,9 @@
 import React from 'react';
-import HeroSection from '../components/sections/HeroSection';
-import CategorySection from '../components/sections/CategorySection';
-import PopularToysSection from '../components/sections/PopularToySection';
-import ValuePropositionSection from '../components/sections/ValuePropositionSection';
-import NewsletterSection from '../components/sections/NewsletterSection';
+import HeroSection from '../components/sections/home/HeroSection';
+import CategorySection from '../components/sections/common/CategorySection';
+import PopularToysSection from '../components/sections/home/PopularToySection';
+import ValuePropositionSection from '../components/sections/home/ValuePropositionSection';
+import NewsletterSection from '../components/sections/common/NewsletterSection';
 
 
 const HomePage: React.FC = () => {

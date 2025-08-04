@@ -6,15 +6,15 @@ import useSelectedImage from '../hooks/useSelectedImage';
 import { useProductDetailActions } from '../hooks/useProductDetailActions';
 import { useAddToCart } from '../hooks/useAddToCart';
 import getDetailIcon from '../utils/getDetailIcon.utils';
-import ProductDetailsSection from '../components/sections/ProductDetailsSection';
-import ProductActions from '../components/common/product/ProductActions';
+import ProductDetailsSection from '../components/sections/product/ProductDetailsSection';
+import ProductActions from '../components/features/product/ProductActions';
 import formatDescription from '../utils/formatDescription.utils';
-import ProductImages from '../components/common/product/ProductImages';
-import ProductMainImage from '../components/common/product/ProductMainImage';
-import RatingStars from '../components/common/RatingStars';
-import PriceDisplay from '../components/common/product/PriceDisplay';
-import ReviewsSection from '../components/sections/ReviewsSection';
-import RelatedProductsSection from '../components/sections/RelatedProductsSection';
+import ProductImages from '../components/features/product/ProductImages';
+import ProductMainImage from '../components/features/product/ProductMainImage';
+import RatingStars from '../components/common/display/RatingStars';
+import PriceDisplay from '../components/features/product/PriceDisplay';
+import ReviewsSection from '../components/sections/product/ReviewsSection';
+import RelatedProductsSection from '../components/sections/product/RelatedProductsSection';
 
 function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();

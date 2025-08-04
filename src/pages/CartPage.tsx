@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import CartItem from '../components/common/CartItem';
+import CartItem from '../components/features/cart/CartItem';
 import OrderSummary from '../components/common/OrderSummary';
-import EmptyCart from '../components/common/EmptyCart';
+import EmptyCart from '../components/features/cart/EmptyCart';
 import DiscountForm from '../components/common/form/DiscountForm';
 import { useCartPageState } from '../hooks/useCartPageState';
 

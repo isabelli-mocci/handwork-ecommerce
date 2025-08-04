@@ -1,5 +1,5 @@
 import { SHIPPING_RETURNS_POLICY } from '../data/shippingReturns.data';
-import { LazySection, Section } from '../components/sections/PolicySection';
+import { LazySection, Section } from '../components/sections/policy/PolicySection';
 import type { PolicySection } from '../data/privacyPolicy.data';
 
 const ShippingReturnsPage: React.FC = () => (

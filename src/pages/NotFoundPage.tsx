@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ErrorEmoji from '../components/common/ErrorEmoji';
+import ErrorEmoji from '../components/common/feedback/ErrorEmoji';
 import { ERROR_PAGE_DATA } from '../data/errorPage.data';
 
 const NotFoundPage: React.FC = () => (
