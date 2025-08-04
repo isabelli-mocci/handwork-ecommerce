@@ -1,22 +1,44 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import App from './App.tsx';
+import { Suspense, lazy } from 'react';
 import ScrollToTop from './utils/scrollToTop.utils';
 import { CartProvider } from './context/CartProvider.tsx';
+import App from './App.tsx';
 import './index.css';
 
-import HomePage from './pages/HomePage.tsx';
-import ProductsPage from './pages/ProductsPage.tsx';
-import ProductDetailPage from './pages/ProductDetailPage.tsx';
-import AboutUsPage from './pages/AboutUsPage.tsx';
-import ContactUsPage from './pages/ContactUsPage.tsx';
-import CartPage from './pages/CartPage.tsx';
-import NotFoundPage from './pages/NotFoundPage.tsx';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
-import ShippingReturnsPage from './pages/ShippingReturnsPage.tsx';
-import FAQPage from './pages/FAQPage.tsx';
-import CheckoutPage from './pages/CheckoutPage.tsx';
+const routeConfig = [
+  { path: '/', element: lazy(() => import('./pages/HomePage')) },
+  { path: '/products', element: lazy(() => import('./pages/ProductsPage')) },
+  { path: '/products/:id', element: lazy(() => import('./pages/ProductDetailPage')) },
+  { path: '/about', element: lazy(() => import('./pages/AboutUsPage')) },
+  { path: '/contact', element: lazy(() => import('./pages/ContactUsPage')) },
+  { path: '/cart', element: lazy(() => import('./pages/CartPage')) },
+  { path: '/privacy-policy', element: lazy(() => import('./pages/PrivacyPolicyPage')) },
+  { path: '/shipping-returns', element: lazy(() => import('./pages/ShippingReturnsPage')) },
+  { path: '/faq', element: lazy(() => import('./pages/FAQPage')) },
+  { path: '/checkout', element: lazy(() => import('./pages/CheckoutPage')) },
+  { path: '*', element: lazy(() => import('./pages/NotFoundPage')) },
+];
+
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error('ErrorBoundary caught:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div>Something went wrong. Please reload the page.</div>;
+    }
+    return this.props.children;
+  }
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -24,19 +46,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <App>
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:id" element={<ProductDetailPage />} />
-            <Route path="/about" element={<AboutUsPage />} />
-            <Route path="/contact" element={<ContactUsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/shipping-returns" element={<ShippingReturnsPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-          </Routes>
+          <ErrorBoundary>
+            <Suspense fallback={<div>Loading page...</div>}>
+              <Routes>
+                {routeConfig.map(({ path, element: Element }) => (
+                  <Route key={path} path={path} element={<Element />} />
+                ))}
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </App>
       </BrowserRouter>
     </CartProvider>
