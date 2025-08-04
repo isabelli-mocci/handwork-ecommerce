@@ -21,6 +21,10 @@ const WishlistPage: React.FC = () => {
     />
   );
 
+  if (favoriteProducts.length === 0) {
+    return renderEmptyState();
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="font-cardo text-2xl md:text-3xl lg:text-4xl font-black text-primary text-center m-10 uppercase">

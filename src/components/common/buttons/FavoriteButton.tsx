@@ -52,7 +52,7 @@ const BUTTON_CLASSES: Record<FavoriteButtonVariant, string> = {
 
 const ICON_CLASSES = {
   base: 'text-2xl transition-transform duration-300',
-  favorite: 'text-red-500',
+  favorite: 'text-accent',
   notFavorite: 'text-gray-600',
 };
 
