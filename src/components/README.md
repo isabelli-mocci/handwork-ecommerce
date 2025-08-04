@@ -1,22 +1,34 @@
 # Components Structure
 
 ## common/
-Reusable components (buttons, icons, etc.)
-- **filter/**: Filtering components
+Reusable UI elements shared across the app:
+- **buttons/**: Button components
+- **display/**: Display and visualization components
+- **feedback/**: Feedback and notification components
 - **form/**: Form-related components
-- **product/**: Product-related components
+- **icons/**: Icon components
+- **OrderSummary.tsx**: Order summary box
+
+## features/
+Feature-specific components grouped by domain:
+- **cart/**: Cart-related components
+- **checkout/**: Checkout flow components
+- **contact/**: Contact form components
+- **filter/**: Filtering logic and UI
+- **payment/**: Payment and payment methods
+- **product/**: Product display and actions
 
 ## layout/
-Structural components (header, footer, sidebar)
-- **header/**
-- **footer/**
-- **sidebar/**
+Structural components for page layout:
+- **footer/**: Footer layout
+- **header/**: Header layout
 
 ## sections/
-Page sections (HeroSection, ReviewsSection, etc.)
-
-## ProductActions.tsx
-Main product actions component
+Page sections for different views:
+- **common/**: Shared sections
+- **home/**: Home page sections
+- **policy/**: Policy-related sections
+- **product/**: Product details and related sections
 
 ---
 
