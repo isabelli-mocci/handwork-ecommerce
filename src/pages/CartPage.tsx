@@ -72,16 +72,16 @@ const CartPage: React.FC = () => {
     return <EmptyCart onContinueShopping={handleContinueShopping} />;
   }
 
+  if (isCartEmpty) {
+    return <EmptyCart onContinueShopping={handleContinueShopping} />;
+  }
+
   return (
     <div className="container mx-auto px-6 md:px-32 pt-16 pb-2 lg:pt-28 lg:pb-4 max-w-[98vw] min-h-[80vh] flex flex-col justify-start">
-      {isCartEmpty ? (
-        <EmptyCart onContinueShopping={handleContinueShopping} />
-      ) : (
-        <div className="flex flex-col lg:flex-row gap-16 flex-1">
-          {renderCartItems()}
-          {renderOrderSummary()}
-        </div>
-      )}
+      <div className="flex flex-col lg:flex-row gap-16 flex-1">
+        {renderCartItems()}
+        {renderOrderSummary()}
+      </div>
     </div>
   );
 };
