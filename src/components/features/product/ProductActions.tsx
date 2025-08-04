@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import QuantitySelector from './QuantitySelector';
 import FavoriteButton from '../../common/buttons/FavoriteButton';
 import ActionButton from '../../common/buttons/ActionButton';
@@ -40,6 +41,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({
   outOfStockLabel = DEFAULT_LABELS.outOfStock,
 }) => {
   const { notify } = useNotification();
+  const navigate = useNavigate();
 
   const handleAddToCart = React.useCallback(() => {
     try {
@@ -49,6 +51,15 @@ const ProductActions: React.FC<ProductActionsProps> = ({
       notify(DEFAULT_LABELS.addToCartError, 'error');
     }
   }, [onAddToCart, notify]);
+
+  const handleBuyItNow = React.useCallback(() => {
+    try {
+      onAddToCart();
+      navigate('/checkout');
+    } catch {
+      notify(DEFAULT_LABELS.addToCartError, 'error');
+    }
+  }, [onAddToCart, navigate, notify]);
 
   const handleToggleFavorite = React.useCallback(() => {
     onToggleFavorite();
@@ -79,7 +90,12 @@ const ProductActions: React.FC<ProductActionsProps> = ({
           variant="detail"
         />
       </div>
-      <ActionButton fullWidth className="mb-4">
+      <ActionButton 
+        fullWidth 
+        className="mb-4" 
+        onClick={handleBuyItNow}
+        disabled={stock === 0}
+      >
         {buyLabel}
       </ActionButton>
     </>
