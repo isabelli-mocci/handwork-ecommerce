@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { FaCreditCard } from 'react-icons/fa6';
 import PaymentInput from '../../features/payment/PaymentInput';
 import InstallmentsSelect from '../../features/payment/InstallmentsSelect';
-import type { PaymentMethodProps, InstallmentProps } from '../../../types/payment/paymentInfo.types';
+import type { PaymentMethodProps, InstallmentProps } from '../../../types/paymentInfo.types';
 
 interface ErrorMessageProps {
   error?: string;
