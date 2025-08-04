@@ -15,6 +15,7 @@ const routeConfig = [
   { path: '/contact', element: lazy(() => import('./pages/ContactUsPage')) },
   { path: '/cart', element: lazy(() => import('./pages/CartPage')) },
   { path: '/privacy-policy', element: lazy(() => import('./pages/PrivacyPolicyPage')) },
+  { path: '/wishlist', element: lazy(() => import('./pages/WishlistPage')) },
   { path: '/shipping-returns', element: lazy(() => import('./pages/ShippingReturnsPage')) },
   { path: '/faq', element: lazy(() => import('./pages/FAQPage')) },
   { path: '/checkout', element: lazy(() => import('./pages/CheckoutPage')) },
