@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import formatDescription from '../utils/formatDescription.utils';
 import type { Product } from '../models/product.model';
-import { useNotification } from '../context/useNotification';
+import { useNotification } from '../hooks/useNotification';
 
 const MESSAGES = {
   addError: 'Error adding product to cart.',

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { FormValidator } from '../utils/formValidator';
+import { FormValidator } from '../utils/formValidator.utils';
 import type { ShippingFormData } from '../types/shipping.types';
 
 interface UseShippingFormReturn {

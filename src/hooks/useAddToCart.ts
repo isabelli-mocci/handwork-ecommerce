@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useCart } from '../hooks/useCart';
 import type { Product } from '../models/product.model';
-import { useNotification } from '../context/useNotification';
+import { useNotification } from './useNotification';
 import type { NotificationType } from '../context/NotificationGlobal';
 
 const MESSAGES = {
