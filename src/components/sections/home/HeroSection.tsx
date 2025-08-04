@@ -18,7 +18,7 @@ const BannerImage: React.FC = () => (
 const HeroCTA: React.FC = () => (
   <div className="w-full flex flex-col items-center absolute left-0 right-0 bottom-0 pb-6 md:pb-8 lg:pb-12 xl:pb-20 z-10">
     <button
-      className="border-2 border-white text-white px-5 py-2 text-sm lg:px-6 lg:text-base xl:px-10 xl:py-3 xl:text-xl uppercase font-medium transition-colors duration-300 hover:bg-secondary hover:text-white"
+      className="border-2 border-white text-white px-5 py-2 text-sm lg:px-6 lg:text-base xl:px-10 xl:py-3 xl:text-xl uppercase font-medium transition-colors duration-300 hover:bg-primary hover:text-white hover:border-primary"
       role="link"
       aria-label="Shop now for the Mocci & Co. collection."
     >
