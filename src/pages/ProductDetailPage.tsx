@@ -15,11 +15,12 @@ import MobileImageGallery from '../components/features/product/MobileImageGaller
 import ProductHeader from '../components/features/product/ProductHeader';
 import ReviewsSection from '../components/sections/product/ReviewsSection';
 import RecommendedProducts from '../components/sections/product/RecommendedProducts';
+import type { Product } from '../models/product.model';
 
 
 function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const product = useProductDetail(id) || undefined;
+  const product: Product | undefined = useProductDetail(id) || undefined;
   const [quantity, setQuantity] = useState(1);
   const { isFavorite, toggleFavorite } = useFavorites();
   const addToCart = useAddToCart();
