@@ -2,7 +2,7 @@ import pinAbout from '../assets/images/about-pin.png';
 import horseAbout from '../assets/images/about-horse.png';
 import reelAbout from '../assets/images/about-reel.png';
 import handmadeAbout from '../assets/images/about-handmade.png';
-import parallaxBannerImg from '../assets/images/banner-about.png';
+import parallaxBannerImg from '../assets/images/banner-about.jpg';
 
 export const ABOUT_CONTENT = {
   title: 'Our Story',

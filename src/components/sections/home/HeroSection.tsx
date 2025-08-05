@@ -1,5 +1,5 @@
-import heroBannerMobile from '../../../assets/images/hero-banner-mobile.png';
-import heroBannerDesktop from '../../../assets/images/hero-banner-desktop.png';
+import heroBannerMobile from '../../../assets/images/hero-banner-mobile.jpg';
+import heroBannerDesktop from '../../../assets/images/hero-banner-desktop.jpg';
 import ctaBanner from '../../../assets/images/cta-hero-section.png';
 import '../../../index.css';
 import { motion } from 'framer-motion';
