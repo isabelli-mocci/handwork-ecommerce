@@ -24,10 +24,10 @@ const FAQItem: React.FC<FAQItemProps> = memo(({ item, isOpen, onToggle }) => {
         id={`faq-question-${faqId}`}
         type="button"
       >
-        <h3 className="font-medium text-lg md:text-xl text-text">
+        <h3 className="font-medium text-base md:text-xl text-text">
           {item.question}
         </h3>
-        <span className="text-primary text-2xl">
+        <span className="text-primary text-lg md:text-xl">
           {isOpen ? '-' : '+'}
         </span>
       </button>
@@ -40,7 +40,7 @@ const FAQItem: React.FC<FAQItemProps> = memo(({ item, isOpen, onToggle }) => {
         }`}
       >
         {item.answer.map((paragraph, i) => (
-          <p key={i} className="text-text/70 text-base md:text-lg mt-2">
+          <p key={i} className="text-text/70 text-sm md:text-base mt-2">
             {paragraph}
           </p>
         ))}
