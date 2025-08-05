@@ -25,14 +25,13 @@ const ProductMainImage: React.FC<ProductMainImageProps> = ({ image, alt }) => {
   }
   return (
     <div
-      className='w-full max-w-lg aspect-[4/3] overflow-hidden group relative flex-1 flex items-stretch'
+      className='w-full max-w-lg aspect-[4/3] overflow-hidden group relative flex-1 flex justify-center items-center'
       style={style}
     >
-      {' '}
       <img
         src={image}
         alt={alt}
-        className='w-full h-full object-contain p-2 transition-transform duration-300 cursor-zoom-in'
+        className='block w-full h-full object-contain p-2 transition-transform duration-300 cursor-zoom-in'
         style={{
           background: '#ede1da',
           minHeight: 0,
