@@ -12,7 +12,7 @@ interface FormActionsProps {
 }
 
 const FormActions: React.FC<FormActionsProps> = ({ loading, onBack }) => (
-  <div className='flex flex-col gap-6 mt-8 md:flex-row md:justify-center lg:justify-start'>
+  <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-start'>
     <FormButton
       type='button'
       variant='secondary'
