@@ -104,7 +104,27 @@ function ProductDetailPage() {
               details={product.details}
               getDetailIcon={getDetailIcon}
               formatDescription={formatDescription}
-              onShare={() => {}}
+              onShare={() => {
+                const url = window.location.href;
+                const title = product.name;
+                const text = typeof product.description === 'string' ? product.description : '';
+                if (navigator.share) {
+                  navigator.share({
+                    title,
+                    text,
+                    url,
+                  }).catch(() => {
+                  });
+                } else {
+                  navigator.clipboard.writeText(url)
+                    .then(() => {
+                      alert('Product link copied to clipboard!');
+                    })
+                    .catch(() => {
+                      alert('Unable to copy link.');
+                    });
+                }
+              }}
             />
           </div>
         </div>
