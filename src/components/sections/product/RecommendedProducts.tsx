@@ -3,8 +3,17 @@ import SectionTitle from '../../common/display/SectionTitle';
 import { recommendedProductsMock } from '../../../data/recommendedProducts.data';
 import ProductCard from '../../features/product/ProductCard';
 import { products } from '../../../data/productsDetails.data';
+import { useFavorites } from '../../../hooks/useFavoritesHooks';
 
 const RecommendedProducts: React.FC = () => {
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  const handleFavoriteClick = (id: string) => {
+    toggleFavorite(id);
+  };
+
+  const checkIsFavorite = (product: { id: string }) => isFavorite(String(product.id));
+
   return (
     <div className='mt-16 w-full'>
       <SectionTitle>You Might Also Like</SectionTitle>
@@ -18,6 +27,8 @@ const RecommendedProducts: React.FC = () => {
               key={product.id}
               product={product}
               actionLabel='View Details'
+              onFavoriteClick={handleFavoriteClick}
+              isFavorite={checkIsFavorite(product)}
             />
           );
         })}
