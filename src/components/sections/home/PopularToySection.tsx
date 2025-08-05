@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import ProductList from '../../features/product/ProductList';
+import ProductCard from '../../features/product/ProductCard';
 import type { Product } from '../../../models/product.model';
 import catVioletImg from '../../../assets/images/cat-violet.png';
 import sheepMargotImg from '../../../assets/images/sheep-margot.png';
@@ -127,12 +127,17 @@ const PopularToysSection: React.FC = () => {
         >
           Popular Toys
         </motion.h2>
-        <ProductList
-          products={POPULAR_TOYS}
-          onFavoriteClick={handleFavoriteClick}
-          isFavorite={checkIsFavorite}
-          className='grid-cols-2 lg:grid-cols-4 gap-4'
-        />
+        <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
+          {POPULAR_TOYS.map(product => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onFavoriteClick={() => handleFavoriteClick(String(product.id))}
+              isFavorite={checkIsFavorite(product)}
+              actionLabel='Choose Options'
+            />
+          ))}
+        </div>
       </div>
     </motion.section>
   );
